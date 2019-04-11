@@ -57,6 +57,8 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.7.0)
     mime-types (1.16)
+    pg (0.18.4)
+    pg (0.18.4-x86-mingw32)
     polyglot (0.3.1)
     pry (0.9.8.2)
       coderay (~> 1.0.5)
@@ -113,7 +115,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  jquery-rails
+  jquery-rails (~> 0.2.6)
+  pg
   pry
   pry-doc
   pry-git
@@ -123,3 +126,6 @@ DEPENDENCIES
   sqlite3-ruby
   validates_timeliness
   vestal_versions!
+
+BUNDLED WITH
+   1.17.3
