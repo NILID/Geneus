@@ -1,7 +1,6 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '3.0.3'
-gem 'rake', '0.8.7'
+gem 'rails', '~> 3.0'
 
 gem 'vestal_versions', :git => 'https://github.com/adamcooper/vestal_versions.git'
 
@@ -10,7 +9,7 @@ gem 'jquery-rails', '~> 0.2.6'
 gem 'validates_timeliness'
 
 group :development, :test do
-  gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'sqlite3'
   gem 'pry'
   gem 'pry-doc'
   gem 'pry-git'
@@ -34,9 +33,6 @@ end
 # gem 'bj'
 # gem 'nokogiri'
 # gem 'aws-s3', :require => 'aws/s3'
-
-# gem 'json',                '= 1.4.6'
-# gem 'json_pure',           '= 1.4.6'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
