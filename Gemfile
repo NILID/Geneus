@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'validates_timeliness', '< 4'
 
+gem 'best_in_place'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
