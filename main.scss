@@ -117,7 +117,7 @@ span.best_in_place:hover, .editable:hover {
   background-color: #eee;
 }
 span.best_in_place:hover {
-  background-image: url('/images/edit.png');
+  background-image: asset_url('edit.png');
   background-repeat: no-repeat;
   background-position: right top;
 }
@@ -159,12 +159,12 @@ div.validation-error li {
   width: 18px;
   height: 17px;
   text-indent: -9999px;
-  background: url(/images/purrClose.png) no-repeat 0 10px;
+  background: asset_url('purrClose.png') no-repeat 0 10px;
 }
 .notice-body {
   min-height: 50px;
   padding: 22px 22px 0 22px;
-  background: url(/images/purrTop.png) no-repeat left top;
+  background: asset_url('purrTop.png') no-repeat left top;
   color: #f9f9f9;
 }
 .notice-body img {width: 50px;
@@ -180,7 +180,7 @@ div.validation-error li {
 }
 .notice-bottom {
   height: 22px;
-  background: url(/images/purrBottom.png) no-repeat left top;
+  background: asset_url('purrBottom.png') no-repeat left top;
 }
 /* ======= jQuery UI ======= */
 .ui-autocomplete, .ui-dialog {
@@ -203,13 +203,13 @@ div.validation-error li {
 #tree table {
   border-spacing: 0px;
   border-collapse: collapse;
-  background: url('/images/tree_bg.png') top left no-repeat;
+  background: asset_url('tree_bg.png') top left no-repeat;
 }
 #tree table tr.greatgrandparents td {
   width: 100px;
 }
 #tree table div.partner {
-  background: url('/images/tree_children_bg.png') top center repeat-y;
+  background: asset_url('tree_children_bg.png') top center repeat-y;
   float: left;
   margin-left: 10px;
 }
@@ -217,10 +217,10 @@ div.validation-error li {
   padding: 10px 0px;
 }
 #tree table td.self {
-  background: url('/images/tree_partners_bg.png') top right no-repeat;
+  background: asset_url('tree_partners_bg.png') top right no-repeat;
 }
 #tree table td.partners {
-  background: url('/images/tree_partners_bg.png') top right repeat-x;
+  background: asset_url('tree_partners_bg.png') top right repeat-x;
 }
 #tree div.empty_node {
   background-color: #cdd5dd;

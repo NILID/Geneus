@@ -1,29 +1,31 @@
 class Person < ActiveRecord::Base
   versioned :initial_version => true
 
-  has_many :partnerships, :dependent => :destroy, :finder_sql =>
-    'SELECT DISTINCT ps.* '+
-      'FROM partnerships ps '+
-      'WHERE ps.person_id = #{id} OR ps.partner_id = #{id} '+
-      'ORDER BY ps.date_started'
-  has_many :partners, :class_name => 'Person', :finder_sql =>
-    'SELECT DISTINCT p.*, ps.date_started AS partnership_date_started '+
-      'FROM people p, partnerships ps '+
-      'WHERE (ps.partner_id = #{id} AND ps.person_id = p.id) '+
-        'OR (ps.person_id = #{id} AND ps.partner_id = p.id) '+
-      'ORDER BY ps.date_started'
-  has_many :defacto_partners, :class_name => 'Person', :finder_sql =>
-    'SELECT DISTINCT person.*, child.date_of_birth AS partnership_date_started '+
-      'FROM people person, people child '+
-      'WHERE (child.father_id = #{id} AND child.mother_id = person.id) '+
-        'OR  (child.mother_id = #{id} AND child.father_id = person.id) '+
-      'ORDER BY child.date_of_birth'
+  has_many :partnerships#, -> { proc {
+#    'SELECT DISTINCT ps.* '+
+ #     'FROM partnerships ps '+
+  #    "WHERE ps.person_id = #{self.id} OR ps.partner_id = #{id} "+
+   #   'ORDER BY ps.date_started' } }, :dependent => :destroy
+  has_many :partners, through: :partnerships, :source => :partner#, :finder_sql =>
+#    'SELECT DISTINCT p.*, ps.date_started AS partnership_date_started '+
+ #     'FROM people p, partnerships ps '+
+  #    "WHERE (ps.partner_id = #{id} AND ps.person_id = p.id) "+
+   #     "OR (ps.person_id = #{id} AND ps.partner_id = p.id) "+
+    #  'ORDER BY ps.date_started'
+  has_many :defacto_partners, through: :partnerships, :source => :partner#, :finder_sql =>
+#    'SELECT DISTINCT person.*, child.date_of_birth AS partnership_date_started '+
+ #     'FROM people person, people child '+
+  #    "WHERE (child.father_id = #{id} AND child.mother_id = person.id) "+
+   #     "OR  (child.mother_id = #{id} AND child.father_id = person.id) "+
+    #  'ORDER BY child.date_of_birth'
   has_many :children_of_father, :class_name => 'Person', :foreign_key => 'father_id'
   has_many :children_of_mother, :class_name => 'Person', :foreign_key => 'mother_id'
-  #named_scope :children, :include => [ :children_of_father, :children_of_mother ]
+  # named_scope :children, :include => [ :children_of_father, :children_of_mother ]
   belongs_to :mother, :class_name => 'Person'
   belongs_to :father, :class_name => 'Person'
   # named_scope :parents, { :include => [ :mother, :father ] }
+
+  attr_accessible :name, :gender, :father_id, :mother_id
 
   validates_length_of :name, :minimum => 1
   validates_inclusion_of :gender, :in => %w( male female ),

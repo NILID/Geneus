@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -26,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20120222054429) do
     t.string   "name"
     t.string   "gender"
     t.text     "bio"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.date     "date_of_birth"
     t.date     "date_of_death"
   end
@@ -42,8 +43,8 @@ ActiveRecord::Schema.define(:version => 20120222054429) do
     t.integer  "number"
     t.integer  "reverted_from"
     t.string   "tag"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   add_index "versions", ["created_at"], :name => "index_versions_on_created_at"

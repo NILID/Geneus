@@ -283,7 +283,7 @@ function errorHandler( xhr ) {
 
   var notice = '<div class="notice">'
     + '<div class="notice-body">'
-    + '<img src="/images/info.png" alt="" />'
+    + '<img src="info.png" alt="" />'
     + '<h3>Error</h3>'
     + '<p>'+ errorText +'</p>'
     + '</div>'
