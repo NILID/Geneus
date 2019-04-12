@@ -25,7 +25,7 @@ class Person < ActiveRecord::Base
   belongs_to :father, :class_name => 'Person'
   # named_scope :parents, { :include => [ :mother, :father ] }
 
-  attr_accessible :name, :gender, :father_id, :mother_id, :bio, :date_of_birth, :date_of_death
+#  attr_accessible :name, :gender, :father_id, :mother_id, :bio, :date_of_birth, :date_of_death
 
   validates_length_of :name, :minimum => 1
   validates_inclusion_of :gender, :in => %w( male female ),

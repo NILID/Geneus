@@ -9,31 +9,31 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222054429) do
+ActiveRecord::Schema.define(version: 20190412205221) do
 
-  create_table "partnerships", :force => true do |t|
+  create_table "partnerships", force: :cascade do |t|
     t.integer "person_id"
     t.integer "partner_id"
     t.date    "date_started"
     t.date    "date_ended"
-    t.string  "nature"
+    t.string  "nature",       limit: 255
   end
 
-  create_table "people", :force => true do |t|
+  create_table "people", force: :cascade do |t|
     t.integer  "father_id"
     t.integer  "mother_id"
-    t.string   "name"
-    t.string   "gender"
+    t.string   "name",          limit: 255
+    t.string   "gender",        limit: 255
     t.text     "bio"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.date     "date_of_birth"
     t.date     "date_of_death"
   end
 
-  create_table "versions", :force => true do |t|
+  create_table "vestal_versions", force: :cascade do |t|
     t.integer  "versioned_id"
     t.string   "versioned_type"
     t.integer  "user_id"
@@ -43,15 +43,15 @@ ActiveRecord::Schema.define(:version => 20120222054429) do
     t.integer  "number"
     t.integer  "reverted_from"
     t.string   "tag"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
-  add_index "versions", ["number"], :name => "index_versions_on_number"
-  add_index "versions", ["tag"], :name => "index_versions_on_tag"
-  add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
-  add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
-  add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
+  add_index "vestal_versions", ["created_at"], name: "index_vestal_versions_on_created_at"
+  add_index "vestal_versions", ["number"], name: "index_vestal_versions_on_number"
+  add_index "vestal_versions", ["tag"], name: "index_vestal_versions_on_tag"
+  add_index "vestal_versions", ["user_id", "user_type"], name: "index_vestal_versions_on_user_id_and_user_type"
+  add_index "vestal_versions", ["user_name"], name: "index_vestal_versions_on_user_name"
+  add_index "vestal_versions", ["versioned_id", "versioned_type"], name: "index_vestal_versions_on_versioned_id_and_versioned_type"
 
 end

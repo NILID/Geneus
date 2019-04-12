@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title WikiGini
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = content_for :head
+  %body
+    yield :body_tag_attributes &gt;
+    #topbar
+      #navigation
+        %h4 Navigate:
+        %ul
+          - nav = []
+          - nav << link_to('Index Of People', people_path)
+          - nav << link_to('New Person', new_person_path)
+          - nav.each do |item|
+            %li= item
+        %br/
+    #page
+      = yield

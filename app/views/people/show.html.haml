@@ -1,0 +1,75 @@
+- content_for :head, javascript_include_tag("person")
+#create_person_dialog{:title => "Add Person"}
+  = render :partial => 'new_remote', :locals => { :person => Person.new }
+#content
+  #versions
+    - if @person.reverted?
+      showing version #{@person.version} –
+      \#{link_to "current version", person_url}
+    = link_to "change history", :action => :versions_index
+  %h2= h @person.name
+  #tree
+    = render :partial => 'tree', :locals => { :person => @person }
+  #bio
+    #information
+      %h3 Information
+      %table{"data-nil" => "<span class='nil'>Click to edit</span>"}
+        %tr
+          %th Name:
+          %td{:width => "100%"}= best_in_place @person, :name, :as => :input
+        %tr
+          %th Gender:
+          %td= best_in_place @person, :gender, :as => :select, :collection => [ ['male', 'male'], ['female', 'female'] ]
+        %tr
+          %th Date of Birth:
+          %td= best_in_place @person, :date_of_birth, :as => :date
+        %tr
+          %th Date of Death:
+          %td= best_in_place @person, :date_of_death, :as => :date
+        %tr
+          %th Father:
+          %td= best_in_place( @person, :father_id, {                                                                       |
+                :as => :autocomplete,                                                                                     |
+                :place_holder => '<span class="nil">Click to add father</span>',                                          |
+                :url => update_father_person_path,                                                                        |
+                :value => @person.father ? render( :partial => 'person', :locals => { :person => @person.father } ) : '', |
+                :autocomplete => autocomplete_person_name_people_path,                                                    |
+                :id_element => "person_father_id",                                                                        |
+                :id_element_name => "person[father_id]"                                                                   |
+              } )                                                                                                         |
+        %tr
+          %th Mother:
+          %td= best_in_place( @person, :mother_id, {                                                                       |
+                :as => :autocomplete,                                                                                     |
+                :place_holder => '<span class="nil">Click to add mother</span>',                                          |
+                :url => update_mother_person_path,                                                                        |
+                :value => @person.mother ? render( :partial => 'person', :locals => { :person => @person.mother } ) : '', |
+                :autocomplete => autocomplete_person_name_people_path,                                                    |
+                :id_element => "person_mother_id",                                                                        |
+                :id_element_name => "person[mother_id]"                                                                   |
+              } )                                                                                                         |
+        %tr
+          %th Partners:
+          %td
+            .editable
+              = render :partial => 'partnerships', :locals => { :person => @person }
+              = link_to_function( "Add new partner", "swapVisibility( $( '#add_partnership_form_container' ), $( '#add_partnership_link' ) ); $( '#partnership_name' ).focus()", :id => "add_partnership_link" )
+              #add_partnership_form_container{:style => "display: none;"}
+                = form_for :partnership, :remote => true, :url => partnerships_path,       |
+                  :html => { 'data-type' => 'html', :id => 'add_partnership_form' } do |f| |
+                  Name: #{f.autocomplete_field :partner_name, autocomplete_person_name_people_path, :"data-id_element" => "#partnership_partner_id"}
+                  \#{f.hidden_field( :person_id, :value => @person.id )}
+                  \#{f.hidden_field( :partner_id )}
+        %tr
+          %th Children:
+          %td
+            .editable
+              = render :partial => 'children', :locals => { :person => @person }
+              = link_to_function( "Add new child", "swapVisibility( $( '#add_child_form_container' ), $( '#add_child_link' ) ); $( '#child_name' ).focus()", :id => "add_child_link" )
+              #add_child_form_container{:style => "display: none;"}
+                = form_for :child, :remote => true, :url => person_children_path(@person), |
+                  :html => { 'data-type' => 'html', :id => 'add_child_form' } do |f|       |
+                  Name: #{f.autocomplete_field :child_name, autocomplete_person_name_people_path, :"data-id_element" => "#child_child_id"}
+                  \#{f.hidden_field( :child_id )}
+    %h3 Bio
+    %p= best_in_place @person, :bio, :as => :textarea, :place_holder => '<span class="nil">Click to add a biography</span>'

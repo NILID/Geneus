@@ -24,7 +24,7 @@ class PeopleController < ApplicationController
   end
 
   def create
-    @person = Person.new( params[:person] )
+    @person = Person.new(person_params)
     respond_to do |format|
       if @person.save
         format.json { render :json => @person, :status => :ok }
@@ -40,7 +40,7 @@ class PeopleController < ApplicationController
     @person = Person.find( params[:id] )
 
     respond_to do |format|
-      if @person.update_attributes( params[:person] )
+      if @person.update_attributes(person_params)
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
         format.json  { render :json => @person, :status => :ok }
       else
@@ -50,7 +50,7 @@ class PeopleController < ApplicationController
   end
 
   def update_mother
-    @person = Person.find( params[:id] )
+    @person = Person.find(person_params)
 
     respond_to do |format|
       if @person.update_attributes( params[:person] )
@@ -65,7 +65,7 @@ class PeopleController < ApplicationController
     @person = Person.find( params[:id] )
 
     respond_to do |format|
-      if @person.update_attributes( params[:person] )
+      if @person.update_attributes(person_params)
         format.html { render :partial => "person", :locals => { :person => @person.father }, :status => :ok }
       else
         format.json { render :json => @person.errors.to_a, :status => :unprocessable_entity }
@@ -81,4 +81,12 @@ class PeopleController < ApplicationController
       format.html { redirect_to( people_url ) }
     end
   end
+
+  private
+    def person_params
+      params.require(:person).permit(
+        :name, :gender, :father_id, :mother_id, :bio, :date_of_birth, :date_of_death
+      )
+    end
+
 end
