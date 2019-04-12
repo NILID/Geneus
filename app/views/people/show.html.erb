@@ -25,30 +25,30 @@
       <table data-nil="<span class='nil'>Click to edit</span>">
         <tr>
           <th>Name:</th>
-          <td width="100%"><%= best_in_place @person, :name, :type => :input %></td>
+          <td width="100%"><%= best_in_place @person, :name, :as => :input %></td>
         </tr>
 
         <tr>
           <th>Gender:</th>
-          <td><%= best_in_place @person, :gender, :type => :select, :collection => [ ['male', 'male'], ['female', 'female'] ] %></td>
+          <td><%= best_in_place @person, :gender, :as => :select, :collection => [ ['male', 'male'], ['female', 'female'] ] %></td>
         </tr>
 
         <tr>
           <th>Date of Birth:</th>
-          <td><%= best_in_place @person, :date_of_birth, :type => :input %></td>
+          <td><%= best_in_place @person, :date_of_birth, :as => :date %></td>
         </tr>
 
         <tr>
           <th>Date of Death:</th>
-          <td><%= best_in_place @person, :date_of_death, :type => :input %></td>
+          <td><%= best_in_place @person, :date_of_death, :as => :date %></td>
         </tr>
 
         <tr>
           <th>Father:</th>
           <td><%= best_in_place( @person, :father_id, {
-            :type => :autocomplete,
-            :nil => '<span class="nil">Click to add father</span>',
-            :path => update_father_person_path,
+            :as => :autocomplete,
+            :place_holder => '<span class="nil">Click to add father</span>',
+            :url => update_father_person_path,
             :value => @person.father ? render( :partial => 'person', :locals => { :person => @person.father } ) : '',
             :autocomplete => autocomplete_person_name_people_path,
             :id_element => "person_father_id",
@@ -59,9 +59,9 @@
         <tr>
           <th>Mother:</th>
           <td><%= best_in_place( @person, :mother_id, {
-            :type => :autocomplete,
-            :nil => '<span class="nil">Click to add mother</span>',
-            :path => update_mother_person_path,
+            :as => :autocomplete,
+            :place_holder => '<span class="nil">Click to add mother</span>',
+            :url => update_mother_person_path,
             :value => @person.mother ? render( :partial => 'person', :locals => { :person => @person.mother } ) : '',
             :autocomplete => autocomplete_person_name_people_path,
             :id_element => "person_mother_id",
@@ -107,6 +107,6 @@
     </div>
 
     <h3>Bio</h3>
-    <p><%= best_in_place @person, :bio, :type => :textarea, :nil => '<span class="nil">Click to add a biography</span>' %></p>
+    <p><%= best_in_place @person, :bio, :as => :textarea, :place_holder => '<span class="nil">Click to add a biography</span>' %></p>
   </div>
 </div>

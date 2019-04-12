@@ -4,12 +4,16 @@ gem 'rails', '~> 3.2'
 
 gem 'vestal_versions'
 
-gem 'rails3-jquery-autocomplete'
+# gem 'rails3-jquery-autocomplete'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'validates_timeliness', '< 4'
 
+gem 'haml-rails'
+
 gem 'best_in_place'
+
+gem 'rails-jquery-autocomplete'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
