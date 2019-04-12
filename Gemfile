@@ -15,6 +15,8 @@ gem 'best_in_place'
 
 gem 'rails-jquery-autocomplete'
 
+gem 'quiet_assets'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
