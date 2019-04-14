@@ -1,6 +1,6 @@
 module PeopleHelper
-  def tree_node(person)
-    render :partial => "tree_node", :locals => { :person => person }
+  def tree_node(person, active: false)
+    render partial: 'tree_node', locals: { person: person, active: active }
   end
 
   def children_with(partner)
