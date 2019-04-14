@@ -36,7 +36,7 @@
     <tr>
       <td colspan="3"></td>
       <td colspan="2"<%= person.all_partners.size > 0 ? ' class="self"'.html_safe : '' %>>
-        <%= tree_node person %>
+        <%= tree_node person, active: true %>
         <%= children_with :unknown %>
       </td>
       <% if person.all_partners.size > 0 %>

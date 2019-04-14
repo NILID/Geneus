@@ -1,0 +1,3 @@
+.partnership{ id: "partnership_#{partnership.id}" }
+  = render partial: 'people/person', locals: { person: partnership.partner_of_person( person ) }
+  = link_to( 'x', '#', onclick: "removePartnership('#{partnership.id.to_s}')", data: { confirm: 'Are you sure?' } )

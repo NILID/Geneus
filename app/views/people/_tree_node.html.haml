@@ -1,5 +1,5 @@
 - if person
-  .node
+  .node{ class: active ? 'active' : nil }
     = link_to person, class: 'node' do
       %span.name= person.name
 - else
