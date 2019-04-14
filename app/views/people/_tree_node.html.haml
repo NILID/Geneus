@@ -1,0 +1,6 @@
+- if person
+  .node
+    = link_to person, class: 'node' do
+      %span.name= person.name
+- else
+  .empty_node
