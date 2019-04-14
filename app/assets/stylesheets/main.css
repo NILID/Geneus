@@ -81,10 +81,11 @@ tr.hover:hover {
   width: 700px;
   margin: .5em auto;
 }
-#navigation h4 {
+#navigation .brand {
+  color: #fff;
   float: left;
-  color: #eee;
-  margin: 0px 0px;
+  margin-right: 2.5em;
+  font-size: 20px;
 }
 #navigation ul {
   float: left;

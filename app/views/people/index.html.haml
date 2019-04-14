@@ -1,0 +1,9 @@
+%h2 Listing People
+%table
+  %tr
+    %th{:style => "width: 100%"} Name
+    %th
+  - @people.each do |person|
+    %tr.hover
+      %td= link_to person.name, person_path(person)
+      %td= link_to 'Destroy', person, data: { :confirm => 'Are you sure?'}, :method => :delete

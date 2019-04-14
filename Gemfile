@@ -32,6 +32,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 
+gem 'paper_trail'
 gem 'vestal_versions', git: 'https://github.com/gmanley/vestal_versions'
 
 gem 'validates_timeliness'

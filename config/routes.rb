@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       post  :update_father
       post  :update_mother
      # match 'versions/:version', :action => :versions_show, :as => 'version_of', :version => /\d+/
-      get :versions_index, as: :versions
+      get :versions
       # match 'versions/compare/:from/:to',
       #   :action => :versions_compare,
       #   :constraints => { :from => /\d+/, :to => /\d+/ }

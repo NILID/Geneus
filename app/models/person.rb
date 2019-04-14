@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  versioned :initial_version => true
+  has_paper_trail
 
   has_many :partnerships#, -> { proc {
 #    'SELECT DISTINCT ps.* '+
@@ -33,6 +33,9 @@ class Person < ActiveRecord::Base
   validates_date :date_of_birth, {
     :on_or_before => :today,
     :on_or_before_message => "must be before today",
+    :allow_blank => true
+  }
+  validates_date :date_of_birth, {
     :on_or_before => :date_of_death,
     :on_or_before_message => "must be before date of death",
     :allow_blank => true

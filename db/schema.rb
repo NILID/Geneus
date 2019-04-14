@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412205221) do
+ActiveRecord::Schema.define(version: 20190413182047) do
 
   create_table "partnerships", force: :cascade do |t|
     t.integer "person_id"
@@ -33,25 +33,16 @@ ActiveRecord::Schema.define(version: 20190412205221) do
     t.date     "date_of_death"
   end
 
-  create_table "vestal_versions", force: :cascade do |t|
-    t.integer  "versioned_id"
-    t.string   "versioned_type"
-    t.integer  "user_id"
-    t.string   "user_type"
-    t.string   "user_name"
-    t.text     "modifications"
-    t.integer  "number"
-    t.integer  "reverted_from"
-    t.string   "tag"
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",                         null: false
+    t.integer  "item_id",        limit: 8,          null: false
+    t.string   "event",                             null: false
+    t.string   "whodunnit"
+    t.text     "object",         limit: 1073741823
     t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text     "object_changes", limit: 1073741823
   end
 
-  add_index "vestal_versions", ["created_at"], name: "index_vestal_versions_on_created_at"
-  add_index "vestal_versions", ["number"], name: "index_vestal_versions_on_number"
-  add_index "vestal_versions", ["tag"], name: "index_vestal_versions_on_tag"
-  add_index "vestal_versions", ["user_id", "user_type"], name: "index_vestal_versions_on_user_id_and_user_type"
-  add_index "vestal_versions", ["user_name"], name: "index_vestal_versions_on_user_name"
-  add_index "vestal_versions", ["versioned_id", "versioned_type"], name: "index_vestal_versions_on_versioned_id_and_versioned_type"
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
 
 end

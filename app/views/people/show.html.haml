@@ -2,10 +2,8 @@
   = render :partial => 'new_remote', :locals => { :person => Person.new }
 #content
   #versions
-    - if @person.reverted?
-      showing version #{@person.version} –
-      \#{link_to "current version", person_url}
-    = link_to "change history", :action => :versions_index
+    showing version #{@person.version} – #{link_to "current version", @person}
+    = link_to "view history", versions_person_path
   %h2= h @person.name
   #tree
     = render :partial => 'tree', :locals => { :person => @person }
@@ -27,7 +25,9 @@
           %td= best_in_place @person, :date_of_death, :as => :date
         %tr
           %th Father:
-          %td= best_in_place( @person, :father_id, {                                                                      |
+          %td
+            = best_in_place @person, :father_id, :as => :select, :collection => ((Person.all - [@person]).map { |f| [f.id, f.name] })
+            =# best_in_place( @person, :father_id, {                                                                      |
                 :as => :autocomplete,                                                                                     |
                 :place_holder => '<span class="nil">Click to add father</span>',                                          |
                 :url => update_father_person_path,                                                                        |
@@ -38,7 +38,9 @@
               } )                                                                                                         |
         %tr
           %th Mother:
-          %td= best_in_place( @person, :mother_id, {                                                                      |
+          %td
+            = best_in_place @person, :mother_id, :as => :select, :collection => ((Person.all - [@person]).map { |f| [f.id, f.name] })
+            =# best_in_place( @person, :mother_id, {                                                                      |
                 :as => :autocomplete,                                                                                     |
                 :place_holder => '<span class="nil">Click to add mother</span>',                                          |
                 :url => update_mother_person_path,                                                                        |
@@ -52,7 +54,7 @@
           %td
             .editable
               = render :partial => 'partnerships', :locals => { :person => @person }
-              = link_to( "Add new partner", onclick: "swapVisibility( $( '#add_partnership_form_container' ), $( '#add_partnership_link' ) ); $( '#partnership_name' ).focus()", :id => "add_partnership_link" )
+              = link_to( "Add new partner", '#', onclick: "swapVisibility( $( '#add_partnership_form_container' ), $( '#add_partnership_link' ) ); $( '#partnership_name' ).focus()", :id => "add_partnership_link" )
               #add_partnership_form_container{:style => "display: none;"}
                 = form_for :partnership, :remote => true, :url => partnerships_path,       |
                   :html => { 'data-type' => 'html', :id => 'add_partnership_form' } do |f| |
@@ -64,7 +66,7 @@
           %td
             .editable
               = render :partial => 'children', :locals => { :person => @person }
-              = link_to( "Add new child",  onclick: "swapVisibility( $( '#add_child_form_container' ), $( '#add_child_link' ) ); $( '#child_name' ).focus()", :id => "add_child_link" )
+              = link_to( "Add new child", '#', onclick: "swapVisibility( $( '#add_child_form_container' ), $( '#add_child_link' ) ); $( '#child_name' ).focus()", :id => "add_child_link" )
               #add_child_form_container{:style => "display: none;"}
                 = form_for :child, :remote => true, :url => person_children_path(@person), |
                   :html => { 'data-type' => 'html', :id => 'add_child_form' } do |f|       |

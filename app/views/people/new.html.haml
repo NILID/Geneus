@@ -1,0 +1,22 @@
+%h2 New Person
+= form_for @person do |f|
+  - if @person.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@person.errors.count, "error")
+        prohibited this person from being saved:
+      %ul
+        - @person.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :gender
+    %br/
+    %select#person_gender{:name => "person[gender]"}
+      %option.grey{:value => ""} Select a gender
+      %option{:value => "male"} Male
+      %option{:value => "female"} Female
+  = f.submit

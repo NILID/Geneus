@@ -5,7 +5,7 @@ class PeopleController < ApplicationController
     @people = Person.all
   end
 
-  def versions_index
+  def versions
     @person = Person.find( params[:id] )
   end
 
