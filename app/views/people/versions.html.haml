@@ -1,12 +1,21 @@
-#content
-  %h2
-    = link_to @person.name, @person
-    – Version History
-  - @person.versions.reverse.each do |v|
-    %p
-      = v.index
-      = v.event
-      =# link_to v.created_at, version_of_person_path(@person, v.index)
-      =# v.user_name || '<unknown user>'
-      =# "edited #{v.modifications.keys.join ','}" unless v.modifications.empty?
+.container-fluid
+  .row
+    .col
+      %h2
+        Version History
+        %small= link_to @person.name, @person, class: 'text-muted'
+
+      %table.table.table-striped
+        %thead
+          %th #
+          %th Action
+        %tbody
+          - @person.versions.reverse.each do |v|
+            %tr
+              %td= v.index
+              %td= v.event
+              %td
+                =# link_to v.created_at, version_of_person_path(@person, v.index)
+                =# v.user_name || '<unknown user>'
+                =# "edited #{v.modifications.keys.join ','}" unless v.modifications.empty?
 

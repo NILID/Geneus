@@ -8,16 +8,6 @@
     = csrf_meta_tags
     = content_for :head
   %body
-    yield :body_tag_attributes &gt;
-    #topbar
-      #navigation
-        %h4= link_to 'WikiGini', root_path, class: 'brand'
-        %ul
-          - nav = []
-          - nav << link_to('Index Of People', people_path)
-          - nav << link_to('New Person', new_person_path)
-          - nav.each do |item|
-            %li= item
-        %br/
-    #page
-      = yield
+    = render 'layouts/header'
+    =# yield :body_tag_attributes &gt;
+    = yield

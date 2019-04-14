@@ -3,8 +3,7 @@ Wikified Geneology
 
 WikiGini is a Ruby on Rails based genealogy application that operates on the wiki principle: all users edit the same record for an individual.
 
-There is a demo [running on Heroku](http://wikigini-demo.herokuapp.com/). Please feel free to
-explore.
+There is a demo [running on Heroku](http://wikigini-demo.herokuapp.com/). Please feel free to explore.
 
 Status
 ------

@@ -23,10 +23,6 @@ textarea {
   max-height: 45em;
   width: 100%;
 }
-#page {
-  margin: 2em;
-  margin-top: 5em;
-}
 .left {
   float: left;
 }
@@ -42,68 +38,11 @@ ul {
 option.grey {
   color: grey;
 }
-tr.hover:hover {
-  background-color: #eee;
-}
 .dim {
   opacity: 0.5;
 }
-#information {
-  float: right;
-  width: 33%;
-  padding-left: 1em;
-  margin: 0 0 10px 10px;
-}
-#bio {
-  clear: left;
-  padding-top: 2em;
-}
-#bio h3 {
-  margin: 5px;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #666;
-}
 #versions {
   float: right;
-}
-/* ======= Navigation ======= */
-#topbar {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  background-color: #333;
-  width: 100%;
-  -moz-box-shadow: 0px 0px 15px #333;
-  -webkit-box-shadow: 0px 0px 15px #333;
-  box-shadow: 0px 0px 15px #333;
-}
-#navigation {
-  width: 700px;
-  margin: .5em auto;
-}
-#navigation .brand {
-  color: #fff;
-  float: left;
-  margin-right: 2.5em;
-  font-size: 20px;
-}
-#navigation ul {
-  float: left;
-  padding: 0px;
-}
-#navigation li {
-  float: left;
-  color: #eee;
-  list-style: none;
-  margin-left: 2.5em;
-}
-#navigation li > a {
-  color: #bbb;
-  text-decoration: none;
-}
-#navigation li > a:hover {
-  color: #eee;
-  background: none;
 }
 /* ======= Ajax forms, etc ======= */
 span.best_in_place, .editable {

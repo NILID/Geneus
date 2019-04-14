@@ -35,6 +35,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'paper_trail'
 gem 'vestal_versions', git: 'https://github.com/gmanley/vestal_versions'
 
+gem "bootstrap_form"
+
 gem 'validates_timeliness'
 
 gem 'haml-rails'

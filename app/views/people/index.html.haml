@@ -1,9 +1,18 @@
-%h2 Listing People
-%table
-  %tr
-    %th{:style => "width: 100%"} Name
-    %th
-  - @people.each do |person|
-    %tr.hover
-      %td= link_to person.name, person_path(person)
-      %td= link_to 'Destroy', person, data: { :confirm => 'Are you sure?'}, :method => :delete
+.container-fluid
+  .row
+    .col
+      %h2
+        Listing People
+        %small.text-muted= pluralize @people.size, 'person'
+      %table.table.table-striped.table-sm
+        %thead
+          %tr
+            %th #
+            %th.col Name
+            %th.col Actions
+        %tbody
+          - @people.each_with_index do |person, index|
+            %tr
+              %td= index+=1
+              %td= link_to person.name, person_path(person)
+              %td= link_to 'Destroy', person, data: { :confirm => 'Are you sure?'}, :method => :delete

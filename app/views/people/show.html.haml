@@ -1,16 +1,22 @@
 #create_person_dialog{:title => "Add Person"}
   = render :partial => 'new_remote', :locals => { :person => Person.new }
-#content
+.container
   #versions
     showing version #{@person.version} – #{link_to "current version", @person}
     = link_to "view history", versions_person_path
   %h2= h @person.name
-  #tree
-    = render partial: 'tree', locals: { person: @person }
-  #bio
-    #information
+
+#tree= render partial: 'tree', locals: { person: @person }
+
+.container
+  .row
+    .col-8
+      %h3 Bio
+      %p= best_in_place @person, :bio, :as => :textarea, :place_holder => '<span class="nil">Click to add a biography</span>'
+
+    .col-4
       %h3 Information
-      %table{"data-nil" => "<span class='nil'>Click to edit</span>"}
+      %table.table.table-sm{"data-nil" => "<span class='nil'>Click to edit</span>"}
         %tr
           %th Name:
           %td{:width => "100%"}= best_in_place @person, :name, :as => :input
@@ -72,5 +78,3 @@
                   :html => { 'data-type' => 'html', :id => 'add_child_form' } do |f|       |
                   Name: #{f.autocomplete_field :child_name, autocomplete_person_name_people_path, :"data-id_element" => "#child_child_id"}
                   \#{f.hidden_field( :child_id )}
-    %h3 Bio
-    %p= best_in_place @person, :bio, :as => :textarea, :place_holder => '<span class="nil">Click to add a biography</span>'
