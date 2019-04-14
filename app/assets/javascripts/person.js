@@ -283,9 +283,10 @@ function errorHandler( xhr ) {
 
   var notice = '<div class="notice">'
     + '<div class="notice-body">'
-    + '<img src="info.png" alt="" />'
     + '<h3>Error</h3>'
-    + '<p>'+ errorText +'</p>'
+    + '<div class="alert-info"></div>'
+    + '<div class="note">'+ errorText +'</div>'
+    + '<div class="clearfix"></div>'
     + '</div>'
     + '<div class="notice-bottom">'
     + '</div>'

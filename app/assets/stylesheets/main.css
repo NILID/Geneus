@@ -168,20 +168,32 @@ div.validation-error li {
   background: url(purrTop.png) no-repeat left top;
   color: #f9f9f9;
 }
-.notice-body img {width: 50px;
+.notice-body img {
+  width: 50px;
   margin: 0 10px 0 0;
   float: left;
 }
-.notice-body h3  {margin: 0;
+.notice-body h3  {
+  margin: 0;
   font-size: 1.1em;
 }
-.notice-body p   {margin: 5px 0 0 60px;
+.notice-body .note   {
+  margin: 5px 0 0 60px;
   font-size: 0.8em;
   line-height: 1.4em;
 }
 .notice-bottom {
   height: 22px;
   background: url(purrBottom.png) no-repeat left top;
+}
+
+.alert-info {
+  background: url('info.png');
+  display:inline-block;
+  float:left;
+  width:50px;
+  height:50px;
+  background-size: cover;
 }
 /* ======= jQuery UI ======= */
 .ui-autocomplete, .ui-dialog {
@@ -257,4 +269,8 @@ div.validation-error li {
 }
 #tree div.node_separator {
   height: 10px;
+}
+
+.clearfix {
+  clear: both;
 }
