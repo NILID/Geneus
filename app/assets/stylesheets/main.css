@@ -223,18 +223,26 @@ div.validation-error li {
 #tree table td.partners {
   background: url('tree_partners_bg.png') top right repeat-x;
 }
-#tree div.empty_node {
+#tree .empty_node {
   background-color: #cdd5dd;
   width: 90px;
   height: 62px;
   margin: auto;
 }
-#tree div.node {
+#tree .node {
   background-color: #eee;
   width: 90px;
   height: 62px;
   margin: auto;
 }
+
+#tree .node.active, #tree .node:hover {
+  -moz-box-shadow: 3px 3px 15px #333;
+  -webkit-box-shadow: 3px 3px 15px #333;
+  box-shadow: 3px 3px 15px #333;
+}
+
+
 #tree a.node {
   display: block;
   width: 84px;
@@ -243,9 +251,6 @@ div.validation-error li {
   text-decoration: none;
   font-size: 10px;
   overflow: hidden;
-  -moz-box-shadow: 3px 3px 15px #333;
-  -webkit-box-shadow: 3px 3px 15px #333;
-  box-shadow: 3px 3px 15px #333;
 }
 #tree a.node .name {
   font-weight: bold;
