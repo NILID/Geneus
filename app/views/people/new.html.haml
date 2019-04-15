@@ -2,7 +2,7 @@
   .row
     .col
       %h2 New Person
-      = bootstrap_form_for @person do |f|
+      = bootstrap_form_with(model: @person, local: true) do |f|
         = f.text_field :name
         = f.select :gender, [['Male', 'male'], ['Female', 'female']], { prompt: '- Select a gender -' }
         = f.submit class: 'btn btn-dark'

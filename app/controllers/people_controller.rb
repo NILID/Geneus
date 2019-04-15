@@ -1,12 +1,12 @@
 class PeopleController < ApplicationController
   autocomplete :person, :name, :display_value => :autocomplete_name
+  before_action :set_person, only: [:show, :edit, :update, :destroy, :versions, :update_father]
 
   def index
     @people = Person.all
   end
 
   def versions
-    @person = Person.find( params[:id] )
   end
 
   def versions_show
@@ -16,7 +16,6 @@ class PeopleController < ApplicationController
   end
 
   def show
-    @person = Person.find( params[:id] )
   end
 
   def new
@@ -37,8 +36,6 @@ class PeopleController < ApplicationController
   end
 
   def update
-    @person = Person.find( params[:id] )
-
     respond_to do |format|
       if @person.update_attributes(person_params)
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
@@ -62,8 +59,6 @@ class PeopleController < ApplicationController
   end
 
   def update_father
-    @person = Person.find( params[:id] )
-
     respond_to do |format|
       if @person.update_attributes(person_params)
         format.html { render :partial => "person", :locals => { :person => @person.father }, :status => :ok }
@@ -74,7 +69,6 @@ class PeopleController < ApplicationController
   end
 
   def destroy
-    @person = Person.find( params[:id] )
     @person.destroy
 
     respond_to do |format|
@@ -83,6 +77,10 @@ class PeopleController < ApplicationController
   end
 
   private
+    def set_person
+      @person = Person.find(params[:id])
+    end
+
     def person_params
       params.require(:person).permit(
         :name, :gender, :father_id, :mother_id, :bio, :date_of_birth, :date_of_death

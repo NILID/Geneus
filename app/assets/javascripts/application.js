@@ -10,9 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+// require turbolinks
 //= require jquery
-//= require jquery_ujs
 //= require jquery-ui
+//= require rails-ujs
+//= require activestorage
 //= require best_in_place
 //= require best_in_place.purr
 //= require best_in_place.jquery-ui
