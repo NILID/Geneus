@@ -3,7 +3,7 @@ class Partnership < ApplicationRecord
   belongs_to :partner, :class_name => 'Person'
 
   after_create :create_inverse, unless: :inverse_exists?
-  after_destroy :destroy_inverse, if: :inverse_exists?
+  after_destroy :destroy_inverses, if: :inverse_exists?
 
   validates_presence_of :person, :partner
   validates_uniqueness_of :partner_id, :scope => :person_id, :message => 'already exists.'

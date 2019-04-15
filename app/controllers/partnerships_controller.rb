@@ -1,10 +1,8 @@
 class PartnershipsController < ApplicationController
-  respond_to :html, :json
-
   def create
     params[:partnership].delete(:partner_name)
-    @partnership = Partnership.new( params[:partnership] )
-    @person = Person.find( params[:partnership][:person_id] )
+    @partnership = Partnership.new(partnership_params)
+    @person = Person.find( partnership_params[:person_id] )
     respond_to do |format|
       if @partnership.save
         format.html do
@@ -29,4 +27,11 @@ class PartnershipsController < ApplicationController
       end
     end
   end
+
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def partnership_params
+      params.require(:partnership).permit(:person_id, :partner_id, :date_started, :date_ended, :nature)
+    end
+
 end
