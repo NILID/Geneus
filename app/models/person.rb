@@ -1,4 +1,4 @@
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   after_create :create_parentship
 
   has_paper_trail
