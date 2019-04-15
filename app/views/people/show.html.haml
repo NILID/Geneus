@@ -3,7 +3,7 @@
 .container
   #versions
     showing version #{@person.version} – #{link_to "current version", @person}
-    = link_to "view history", versions_person_path
+    = link_to "view history", versions_person_path(@person)
   %h2= h @person.name
 
 #tree= render partial: 'tree', locals: { person: @person }
