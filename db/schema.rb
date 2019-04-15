@@ -12,6 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2019_04_15_070505) do
 
+  create_table "parentships", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "father_id"
+    t.integer "mother_id"
+    t.index ["father_id"], name: "index_parentships_on_father_id"
+    t.index ["mother_id"], name: "index_parentships_on_mother_id"
+    t.index ["person_id"], name: "index_parentships_on_person_id"
+  end
+
   create_table "partnerships", force: :cascade do |t|
     t.integer "person_id"
     t.integer "partner_id"
@@ -23,8 +32,6 @@ ActiveRecord::Schema.define(version: 2019_04_15_070505) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.integer "father_id"
-    t.integer "mother_id"
     t.string "name"
     t.string "gender"
     t.text "bio"
@@ -32,8 +39,6 @@ ActiveRecord::Schema.define(version: 2019_04_15_070505) do
     t.date "date_of_death"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["father_id"], name: "index_people_on_father_id"
-    t.index ["mother_id"], name: "index_people_on_mother_id"
   end
 
   create_table "versions", force: :cascade do |t|

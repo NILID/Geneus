@@ -1,4 +1,6 @@
 class Person < ActiveRecord::Base
+  after_create :create_parentship
+
   has_paper_trail
 
   has_many :partnerships#, -> { proc {
@@ -18,14 +20,29 @@ class Person < ActiveRecord::Base
   #    "WHERE (child.father_id = #{id} AND child.mother_id = person.id) "+
    #     "OR  (child.mother_id = #{id} AND child.father_id = person.id) "+
     #  'ORDER BY child.date_of_birth'
-  has_many :children_of_father, :class_name => 'Person', :foreign_key => 'father_id'
-  has_many :children_of_mother, :class_name => 'Person', :foreign_key => 'mother_id'
-  # named_scope :children, :include => [ :children_of_father, :children_of_mother ]
-  belongs_to :mother, :class_name => 'Person'
-  belongs_to :father, :class_name => 'Person'
-  # named_scope :parents, { :include => [ :mother, :father ] }
 
-#  attr_accessible :name, :gender, :father_id, :mother_id, :bio, :date_of_birth, :date_of_death
+
+  has_one :parentship
+
+  has_one :mother, through: :parentship
+  has_one :father, through: :parentship
+
+  has_many :children_of_father#, through: :parentship, source: :father, :primary_key => 'father_id'
+  has_many :children_of_mother#, through: :parentship, :foreign_key => 'mother_id'
+  # has_many :children_of_mother, :class_name => 'Parentship', :foreign_key => 'mother_id'
+
+  def children
+    Parentship.where(father_id: self).or(Parentship.where(mother_id: self)).includes(:person).sort_by { |c| c.person.date_of_birth || Date.new(0) }
+  end
+
+  def children_person
+    children.map {|c| c.person}
+  end
+
+  scope :men,   -> { where(gender: 'male') }
+  scope :women, -> { where(gender: 'female') }
+
+  # named_scope :parents, { :include => [ :mother, :father ] }
 
   validates_length_of :name, :minimum => 1
   validates_inclusion_of :gender, :in => %w( male female ),
@@ -55,24 +72,18 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def children
-    (self.children_of_father | self.children_of_mother).sort_by { |c|
-      c.date_of_birth || Date.new(0)
-    }
-  end
-
   def children_with( person )
     if person == :unknown
-      self.children.find_all { |child| !(child.mother_id && child.father_id) }
+      self.children_person.find_all { |child| !(child.mother && child.father) }
     else
-      (self.children & person.children rescue []).sort_by { |c|
+      (self.children_person & person.children rescue []).sort_by { |c|
         c.date_of_birth || Date.new(0)
       }
     end
   end
 
   def children_ids
-    self.children_of_father_ids | self.children_of_mother_ids
+    self.children.pluck(:id)
   end
 
   def add_child( child )
@@ -158,15 +169,4 @@ class Person < ActiveRecord::Base
     # return json
     person.to_json
   end
-
-  def self.men(conditions = {})
-    conditions = conditions.merge({ :gender => "male" })
-    Person.find(:all, :conditions => conditions)
-  end
-
-  def self.women(conditions = {})
-    conditions = conditions.merge({ :gender => "female" })
-    Person.find(:all, :conditions => conditions)
-  end
-
 end

@@ -8,8 +8,6 @@ Rails.application.routes.draw do
       # match 'versions/compare/:from/:to',
       #   :action => :versions_compare,
       #   :constraints => { :from => /\d+/, :to => /\d+/ }
-      get :update_father
-      get :update_mother
     end
     collection do
       get   :autocomplete_person_name
@@ -17,6 +15,7 @@ Rails.application.routes.draw do
     resources :children, :only => [ :create, :destroy ]
   end
   resources :partnerships, :only => [ :create, :destroy ]
+  resources :parentships,  :only => [ :update, :destroy ]
 
   root :to => "people#index"
 

@@ -32,7 +32,7 @@
         %tr
           %th Father:
           %td
-            = best_in_place @person, :father_id, :as => :select, :collection => ((Person.all - [@person]).map { |f| [f.id, f.name] })
+            = best_in_place @person.parentship, :father_id, :as => :select, :collection => ((Person.men - [@person]).map { |f| [f.id, f.name] })
             =# best_in_place( @person, :father_id, {                                                                      |
                 :as => :autocomplete,                                                                                     |
                 :place_holder => '<span class="nil">Click to add father</span>',                                          |
@@ -45,7 +45,7 @@
         %tr
           %th Mother:
           %td
-            = best_in_place @person, :mother_id, :as => :select, :collection => ((Person.all - [@person]).map { |f| [f.id, f.name] })
+            = best_in_place @person.parentship, :mother_id, :as => :select, :collection => ((Person.women - [@person]).map { |f| [f.id, f.name] })
             =# best_in_place( @person, :mother_id, {                                                                      |
                 :as => :autocomplete,                                                                                     |
                 :place_holder => '<span class="nil">Click to add mother</span>',                                          |
