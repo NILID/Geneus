@@ -71,31 +71,6 @@ $( function() {
     } );
   } );
 
-  /* Partnerships
-  ** =========================================================*/
-
-  /* Partnership form */
-  $( '#add_partnership_form' )
-    .bind( "ajax:success", function( evt, data, status, xhr ) {
-      var $form = $( this );
-      clearFields( $form );
-      $( '#partnerships' ).append( xhr.responseText );
-      swapVisibility( $( '#add_partnership_link' ), $( '#add_partnership_form_container' ) );
-    } )
-    .bind( 'ajax:complete', function( evt, xhr, status ) {
-      $( "#partnership_partner_id" ).val( '' );
-    } )
-    .bind( "ajax:error", ajaxFormErrorHandler );
-  /* Bind escape key handler for add partnership form */
-  $( "#partnership_partner_name" ).bind( 'keyup', function( event ) {
-    if ( event.keyCode == 27 && $( '#add_partnership_link' ).css( 'display' ) == 'none' ) { // escape key
-      swapVisibility( $( '#add_partnership_link' ), $( '#add_partnership_form_container' ) );
-      clearFields( $( '#add_partnership_form' ) );
-    }
-  } );
-  /* Bind enter key handler for add partnership form */
-  $( "#partnership_partner_name" ).bind( 'keypress', stopSubmitOnEnter );
-
   /* Children
   ** =========================================================*/
 
@@ -226,23 +201,6 @@ function stopSubmitOnEnter(e) {
 
 function clearFields( $elem ) {
   $elem.find( 'textarea,input[type="text"],input[type="file"]' ).val( "" ).blur();
-}
-
-function removePartnership( id ) {
-  var options = {
-    type:       "post",
-    url:        "/partnerships/" + id,
-    dataType:   'script',
-    data:       { '_method': 'delete' },
-    success:    function() { removePartnershipSuccessCallback(id); },
-    error:      function( xhr ){ errorHandler( xhr ); },
-    beforeSend: function( xhr ){ xhr.setRequestHeader( "Accept", "application/json" ); }
-  };
-  jQuery.ajax( options );
-}
-
-function removePartnershipSuccessCallback( id ) {
-  $( "#partnership_"+ id ).remove();
 }
 
 function removeChildOfPerson( person_id, child_id ) {

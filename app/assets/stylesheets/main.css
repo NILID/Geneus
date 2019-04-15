@@ -172,3 +172,7 @@ div.validation-error li {
 #tree div.node_separator {
   height: 10px;
 }
+
+.select2-container {
+  display: block;
+}
