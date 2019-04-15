@@ -18,17 +18,17 @@ ActiveRecord::Schema.define(version: 20190413182047) do
     t.integer "partner_id"
     t.date    "date_started"
     t.date    "date_ended"
-    t.string  "nature",       limit: 255
+    t.string  "nature"
   end
 
   create_table "people", force: :cascade do |t|
     t.integer  "father_id"
     t.integer  "mother_id"
-    t.string   "name",          limit: 255
-    t.string   "gender",        limit: 255
+    t.string   "name"
+    t.string   "gender"
     t.text     "bio"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.date     "date_of_birth"
     t.date     "date_of_death"
   end
