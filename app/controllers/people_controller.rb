@@ -1,12 +1,19 @@
 class PeopleController < ApplicationController
   autocomplete :person, :name, :display_value => :autocomplete_name
-  before_action :set_person, only: [:show, :edit, :update, :destroy, :versions, :update_father]
+  before_action :set_person, only: %i[show edit update destroy versions update_father]
 
   def index
     @people = Person.all
   end
 
   def versions
+  end
+
+  def list
+    list = Person.tokens(params[:q])
+    respond_to do |format|
+      format.json { render json: list }
+    end
   end
 
   def versions_show
@@ -33,6 +40,9 @@ class PeopleController < ApplicationController
         format.html { render :action => "new" }
       end
     end
+  end
+
+  def edit
   end
 
   def update
@@ -83,7 +93,7 @@ class PeopleController < ApplicationController
 
     def person_params
       params.require(:person).permit(
-        :name, :gender, :father, :mother, :bio, :date_of_birth, :date_of_death
+        :name, :gender, :father, :mother, :bio, :date_of_birth, :date_of_death, partner_ids: []
       )
     end
 

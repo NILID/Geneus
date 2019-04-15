@@ -1,0 +1,13 @@
+.container
+  .row
+    .col
+      %h2 New Person
+      = bootstrap_form_with(model: @person, local: true) do |f|
+        = f.text_field :name
+        = f.select :gender, [['Male', 'male'], ['Female', 'female']], { prompt: '- Select a gender -' }
+        = f.date_field :date_of_birth
+        = f.date_field :date_of_death
+        = f.select :partner_ids, Person.all.collect {|c| [c.name, c.id]}, {}, { class: 'select2-token', multiple: true, data: {width: '280px', url: list_people_path(format: :json)} }
+
+        = f.text_area :bio
+        = f.submit class: 'btn btn-dark'

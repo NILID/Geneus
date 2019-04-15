@@ -10,7 +10,8 @@ Rails.application.routes.draw do
       #   :constraints => { :from => /\d+/, :to => /\d+/ }
     end
     collection do
-      get   :autocomplete_person_name
+      get  :list
+      get  :autocomplete_person_name
     end
     resources :children, :only => [ :create, :destroy ]
   end

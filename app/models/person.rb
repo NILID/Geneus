@@ -1,4 +1,6 @@
 class Person < ApplicationRecord
+  include Tokenable
+
   after_create :create_parentship
 
   has_paper_trail

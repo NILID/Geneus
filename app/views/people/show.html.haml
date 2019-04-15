@@ -5,9 +5,11 @@
   .row
     .col-6
       %h2= h @person.name
+
     .col-6.text-right
       showing version #{@person.version} – #{link_to "current version", @person}
       = link_to "view history", versions_person_path(@person)
+      = link_to 'edit', edit_person_path(@person), class: 'btn btn-dark'
 
 #tree= render partial: 'tree', locals: { person: @person }
 
@@ -15,23 +17,22 @@
   .row
     .col-8
       %h3 Bio
-      %p= best_in_place @person, :bio, :as => :textarea, :place_holder => '<span class="nil">Click to add a biography</span>'
+      %p= @person.bio
 
     .col-4
       %h3 Information
       %table.table.table-sm{"data-nil" => "<span class='nil'>Click to edit</span>"}
         %tr
-          %th Name:
-          %td{:width => "100%"}= best_in_place @person, :name, :as => :input
-        %tr
           %th Gender:
-          %td= best_in_place @person, :gender, :as => :select, :collection => [ ['male', 'male'], ['female', 'female'] ]
-        %tr
-          %th Date of Birth:
-          %td= best_in_place @person, :date_of_birth, :as => :date
-        %tr
-          %th Date of Death:
-          %td= best_in_place @person, :date_of_death, :as => :date
+          %td= @person.gender
+        - if@person.date_of_birth
+          %tr
+            %th Date of Birth:
+            %td= @person.date_of_birth
+        - if@person.date_of_death
+          %tr
+            %th Date of Death:
+            %td= @person.date_of_death
         %tr
           %th Father:
           %td
@@ -60,15 +61,7 @@
               } )                                                                                                         |
         %tr
           %th Partners:
-          %td
-            .editable
-              = render partial: 'people/partnerships', locals: { person: @person }
-              = link_to( "Add new partner", '#', onclick: "swapVisibility( $( '#add_partnership_form_container' ), $( '#add_partnership_link' ) ); $( '#partnership_name' ).focus()", :id => "add_partnership_link" )
-              #add_partnership_form_container{:style => "display: none;"}
-                = form_for :partnership, :remote => true, :url => partnerships_path, :html => { 'data-type' => 'html', :id => 'add_partnership_form' } do |f|
-                  Name: #{f.autocomplete_field :partner_name, autocomplete_person_name_people_path, :"data-id_element" => "#partnership_partner_id"}
-                  \#{f.hidden_field( :person_id, :value => @person.id )}
-                  \#{f.hidden_field( :partner_id )}
+          %td= render partial: 'people/partnerships', locals: { person: @person }
         %tr
           %th Children:
           %td
