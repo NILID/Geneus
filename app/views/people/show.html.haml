@@ -59,7 +59,7 @@
           %th Partners:
           %td
             .editable
-              = render :partial => 'partnerships', :locals => { :person => @person }
+              = render :partial => 'people/partnerships', :locals => { :person => @person }
               = link_to( "Add new partner", '#', onclick: "swapVisibility( $( '#add_partnership_form_container' ), $( '#add_partnership_link' ) ); $( '#partnership_name' ).focus()", :id => "add_partnership_link" )
               #add_partnership_form_container{:style => "display: none;"}
                 = form_for :partnership, :remote => true, :url => partnerships_path,       |

@@ -110,9 +110,9 @@ class Person < ApplicationRecord
     # Explicit partners override defacto partners in the union operation.
     # Then we sort by the date the partnership started, which in the
     # case of the defacto partners is the date their child was born.
-    (partners | defacto_partners).sort_by { |p|
-      p.partnership_date_started || ''
-    }
+
+    #(partners | defacto_partners).includes(:partnerships).order('partnerships.date_started')
+    partners.includes(:partnerships).order('partnerships.date_started')
   end
 
   def parents
