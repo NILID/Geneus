@@ -31,9 +31,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-
 gem 'paper_trail'
-gem 'vestal_versions', git: 'https://github.com/gmanley/vestal_versions'
 
 gem "bootstrap_form"
 

@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/gmanley/vestal_versions
-  revision: 81fc2c9371ebd4197dc16beca011ccff86b91b08
-  specs:
-    vestal_versions (3.0.0)
-      activerecord (>= 4, < 6)
-      activesupport (>= 4, < 6)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -214,7 +206,6 @@ DEPENDENCIES
   therubyracer
   uglifier (>= 1.3.0)
   validates_timeliness
-  vestal_versions!
   web-console (~> 2.0)
 
 BUNDLED WITH
