@@ -59,11 +59,10 @@
           %th Partners:
           %td
             .editable
-              = render :partial => 'people/partnerships', :locals => { :person => @person }
+              = render partial: 'people/partnerships', locals: { person: @person }
               = link_to( "Add new partner", '#', onclick: "swapVisibility( $( '#add_partnership_form_container' ), $( '#add_partnership_link' ) ); $( '#partnership_name' ).focus()", :id => "add_partnership_link" )
               #add_partnership_form_container{:style => "display: none;"}
-                = form_for :partnership, :remote => true, :url => partnerships_path,       |
-                  :html => { 'data-type' => 'html', :id => 'add_partnership_form' } do |f| |
+                = form_for :partnership, :remote => true, :url => partnerships_path, :html => { 'data-type' => 'html', :id => 'add_partnership_form' } do |f|
                   Name: #{f.autocomplete_field :partner_name, autocomplete_person_name_people_path, :"data-id_element" => "#partnership_partner_id"}
                   \#{f.hidden_field( :person_id, :value => @person.id )}
                   \#{f.hidden_field( :partner_id )}
@@ -74,7 +73,6 @@
               = render :partial => 'children', :locals => { :person => @person }
               = link_to( "Add new child", '#', onclick: "swapVisibility( $( '#add_child_form_container' ), $( '#add_child_link' ) ); $( '#child_name' ).focus()", :id => "add_child_link" )
               #add_child_form_container{:style => "display: none;"}
-                = form_for :child, :remote => true, :url => person_children_path(@person), |
-                  :html => { 'data-type' => 'html', :id => 'add_child_form' } do |f|       |
+                = form_for :child, :remote => true, :url => person_children_path(@person), :html => { 'data-type' => 'html', :id => 'add_child_form' } do |f|
                   Name: #{f.autocomplete_field :child_name, autocomplete_person_name_people_path, :"data-id_element" => "#child_child_id"}
                   \#{f.hidden_field( :child_id )}

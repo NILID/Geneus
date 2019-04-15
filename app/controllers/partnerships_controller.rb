@@ -21,9 +21,9 @@ class PartnershipsController < ApplicationController
 
     respond_to do |format|
       if @partnership.destroy
-        format.json { head :ok }
+        format.js
       else
-        format.json  { render :json => @partnership.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end

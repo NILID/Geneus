@@ -189,6 +189,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     regexp_parser (1.4.0)
     request_store (1.4.1)
       rack (>= 1.4)
@@ -294,6 +296,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   rails-controller-testing
   rails-jquery-autocomplete
+  record_tag_helper
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver
