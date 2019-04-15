@@ -1,7 +1,7 @@
 #create_person_dialog{:title => "Add Person"}
   = render :partial => 'new_remote', :locals => { :person => Person.new }
 .container
-  #versions
+  #versions.float-right
     showing version #{@person.version} – #{link_to "current version", @person}
     = link_to "view history", versions_person_path(@person)
   %h2= h @person.name

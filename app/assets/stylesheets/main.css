@@ -1,48 +1,12 @@
 /* ======= General ======= */
-table {
-  border: none;
-  border-spacing: 3px;
-  width: 100%;
-}
-td, th {
-  vertical-align: top;
-  text-align: left;
-}
-th {
-  padding-right: 10px;
-  white-space: nowrap;
-}
-h3 {
-  margin: 0.5em;
-}
-h4 {
-  margin: 0.5em 0px;
-}
-textarea {
-  min-height: 15em;
-  max-height: 45em;
-  width: 100%;
-}
-.left {
-  float: left;
-}
-.right {
-  float: right;
-}
 .nil {
   color: #aaa;
-}
-ul {
-  margin: 0px;
 }
 option.grey {
   color: grey;
 }
 .dim {
   opacity: 0.5;
-}
-#versions {
-  float: right;
 }
 /* ======= Ajax forms, etc ======= */
 span.best_in_place, .editable {
@@ -193,7 +157,6 @@ div.validation-error li {
   box-shadow: 3px 3px 15px #333;
 }
 
-
 #tree a.node {
   display: block;
   width: 84px;
@@ -208,8 +171,4 @@ div.validation-error li {
 }
 #tree div.node_separator {
   height: 10px;
-}
-
-.clearfix {
-  clear: both;
 }
