@@ -53,6 +53,7 @@ gem 'rails-jquery-autocomplete'
 
 group :heroku do
   gem 'pg'
+  gem 'rails_12factor'
 end
 
 group :development, :test do
@@ -85,7 +86,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'faker'
   gem 'factory_bot_rails'
-
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
