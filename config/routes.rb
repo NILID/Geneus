@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     end
     collection do
       get  :list
-      get  :autocomplete_person_name
     end
     resources :children, :only => [ :create, :destroy ]
   end

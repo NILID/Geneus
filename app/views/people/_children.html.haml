@@ -1,3 +1,3 @@
 #children
-  - person.children_person.each do |child|
-    = render :partial => "child", :locals => { :child => child, :person => person }
+  = div_for person.children_person do |child|
+    = render partial: 'people/person', locals: { person: child }

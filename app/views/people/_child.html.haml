@@ -1,3 +1,0 @@
-.child{ id: "child_#{child.id}" }
-  = render partial: 'people/person', locals: { person: child }
-  = link_to( 'x', '#', onclick: "removeChildOfPerson('#{person.id.to_s}', '#{child.id.to_s}')", data: { confirm: 'Are you sure?' } )

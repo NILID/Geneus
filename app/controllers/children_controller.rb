@@ -25,7 +25,7 @@ class ChildrenController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.json { head :ok }
+        format.js
         format.html { redirect_to @person }
       else
         format.json { render :json => @person.errors.to_a, :status => :unprocessable_entity }

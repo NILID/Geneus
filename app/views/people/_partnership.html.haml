@@ -1,3 +1,0 @@
-= div_for partnership do
-  = render partial: 'people/person', locals: { person: partnership.partner_of_person( person ) }
-  = link_to( 'x', partnership, method: :delete, remote: true, data: { confirm: 'Are you sure?' } )

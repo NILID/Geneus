@@ -1,15 +1,17 @@
-#create_person_dialog{:title => "Add Person"}
-  = render :partial => 'new_remote', :locals => { :person => Person.new }
-
 .container
   .row
     .col-6
       %h2= @person.name
 
     .col-6.text-right
-      showing version #{@person.version} – #{link_to "current version", @person}
-      = link_to "view history", versions_person_path(@person)
-      = link_to 'edit', edit_person_path(@person), class: 'btn btn-dark'
+      %span.dropdown
+        = link_to '#' ,class: 'btn btn-dark dropdown-toggle', role: 'button', id: 'dropdownMenuLink', data: { toggle: "dropdown"}, aria: { haspopup: "true", expanded: "false" } do
+          Versions
+        .dropdown-menu(aria-labelledby="dropdownMenuButton")
+          = link_to 'Current version', @person, class: 'dropdown-item'
+          = link_to 'View history', versions_person_path(@person), class: 'dropdown-item'
+
+      = link_to 'Edit', edit_person_path(@person), class: 'btn btn-dark'
 
 #tree= render partial: 'tree', locals: { person: @person }
 
@@ -50,11 +52,4 @@
           %td= render partial: 'people/partnerships', locals: { person: @person }
         %tr
           %th Children:
-          %td
-            .editable
-              = render :partial => 'children', :locals => { :person => @person }
-              = link_to( "Add new child", '#', onclick: "swapVisibility( $( '#add_child_form_container' ), $( '#add_child_link' ) ); $( '#child_name' ).focus()", :id => "add_child_link" )
-              #add_child_form_container{:style => "display: none;"}
-                = form_for :child, :remote => true, :url => person_children_path(@person), :html => { 'data-type' => 'html', :id => 'add_child_form' } do |f|
-                  Name: #{f.autocomplete_field :child_name, autocomplete_person_name_people_path, :"data-id_element" => "#child_child_id"}
-                  \#{f.hidden_field( :child_id )}
+          %td= render partial: 'children', locals: { person: @person }
