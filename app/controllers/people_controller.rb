@@ -6,14 +6,15 @@ class PeopleController < ApplicationController
     @people = Person.all
   end
 
-  def versions
-  end
 
   def list
     list = Person.tokens(params[:q])
     respond_to do |format|
       format.json { render json: list }
     end
+  end
+
+  def versions
   end
 
   def versions_show
@@ -23,6 +24,8 @@ class PeopleController < ApplicationController
   end
 
   def show
+    @father = @person.father
+    @mother = @person.mother
   end
 
   def new
@@ -51,28 +54,7 @@ class PeopleController < ApplicationController
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
         format.json  { render :json => @person, :status => :ok }
       else
-        format.json { render :json => @person.errors.to_a, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def update_mother
-    @person = Person.find(person_params)
-
-    respond_to do |format|
-      if @person.update_attributes( params[:person] )
-        format.html { render :partial => "person", :locals => { :person => @person.mother }, :status => :ok }
-      else
-        format.json { render :json => @person.errors.to_a, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def update_father
-    respond_to do |format|
-      if @person.update_attributes(person_params)
-        format.html { render :partial => "person", :locals => { :person => @person.father }, :status => :ok }
-      else
+        format.html { render :edit }
         format.json { render :json => @person.errors.to_a, :status => :unprocessable_entity }
       end
     end
@@ -93,7 +75,7 @@ class PeopleController < ApplicationController
 
     def person_params
       params.require(:person).permit(
-        :name, :gender, :father, :mother, :bio, :date_of_birth, :date_of_death, partner_ids: []
+        :name, :gender, :bio, :date_of_birth, :date_of_death, { parentship_attributes: [:id, :father_id, :mother_id] }, partner_ids: []
       )
     end
 

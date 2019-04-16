@@ -7,6 +7,8 @@ class Parentship < ApplicationRecord
   private
 
   def manage_partner
-    father.partnerships.create! partner: mother
+    if father && mother
+      father.partnerships.create! partner: mother
+    end
   end
 end

@@ -33,6 +33,9 @@ class Person < ApplicationRecord
   has_many :children_of_mother#, through: :parentship, :foreign_key => 'mother_id'
   # has_many :children_of_mother, :class_name => 'Parentship', :foreign_key => 'mother_id'
 
+  accepts_nested_attributes_for :parentship
+
+
   def children
     Parentship.where(father_id: self).or(Parentship.where(mother_id: self)).includes(:person).sort_by { |c| c.person.date_of_birth || Date.new(0) }
   end

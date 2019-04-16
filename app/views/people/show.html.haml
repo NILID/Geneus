@@ -25,40 +25,26 @@
         %tr
           %th Gender:
           %td= @person.gender
+
         - if@person.date_of_birth
           %tr
             %th Date of Birth:
             %td= @person.date_of_birth
+
         - if@person.date_of_death
           %tr
             %th Date of Death:
             %td= @person.date_of_death
-        %tr
-          %th Father:
-          %td
-            = best_in_place @person.parentship, :father_id, :as => :select, :collection => ((Person.men - [@person]).map { |f| [f.id, f.name] })
-            =# best_in_place( @person, :father_id, {                                                                      |
-                :as => :autocomplete,                                                                                     |
-                :place_holder => '<span class="nil">Click to add father</span>',                                          |
-                :url => update_father_person_path,                                                                        |
-                :value => @person.father ? render( :partial => 'person', :locals => { :person => @person.father } ) : '', |
-                :autocomplete => autocomplete_person_name_people_path,                                                    |
-                :id_element => "person_father_id",                                                                        |
-                :id_element_name => "person[father_id]"                                                                   |
-              } )                                                                                                         |
-        %tr
-          %th Mother:
-          %td
-            = best_in_place @person.parentship, :mother_id, :as => :select, :collection => ((Person.women - [@person]).map { |f| [f.id, f.name] })
-            =# best_in_place( @person, :mother_id, {                                                                      |
-                :as => :autocomplete,                                                                                     |
-                :place_holder => '<span class="nil">Click to add mother</span>',                                          |
-                :url => update_mother_person_path,                                                                        |
-                :value => @person.mother ? render( :partial => 'person', :locals => { :person => @person.mother } ) : '', |
-                :autocomplete => autocomplete_person_name_people_path,                                                    |
-                :id_element => "person_mother_id",                                                                        |
-                :id_element_name => "person[mother_id]"                                                                   |
-              } )                                                                                                         |
+
+        - if @father
+          %tr
+            %th Father:
+            %td= link_to @father.name, @father
+
+        - if @mother
+          %tr
+            %th Mother:
+            %td= link_to @mother.name, @mother
         %tr
           %th Partners:
           %td= render partial: 'people/partnerships', locals: { person: @person }
