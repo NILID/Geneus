@@ -1,12 +1,10 @@
 ![Geneus logo](https://raw.githubusercontent.com/NILID/Geneus/master/geneus-github.png)
 
 # Geneus
-------------------
 
 Geneus is a Ruby on Rails based genealogy application that operates on the wiki principle: all users edit the same record for an individual.
 
 ## Status
-------
 
 This project is in pre-alpha state, meaning you won't find a full set of features to work with. At this point you can:
 
@@ -23,7 +21,6 @@ It is conspicuously missing:
 * Relationship validations
 
 ## Setup
------
 
     bundle install
     rake db:migrate
