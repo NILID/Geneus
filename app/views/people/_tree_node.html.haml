@@ -1,5 +1,4 @@
 - if person
-  = link_to person, class: "node #{ active ? 'active' : nil }" do
-    %span.name= person.name
+  = link_to person.name, person, class: "node #{ active ? 'active' : nil }"
 - else
   .empty_node

@@ -4,7 +4,7 @@
 .container
   .row
     .col-6
-      %h2= h @person.name
+      %h2= @person.name
 
     .col-6.text-right
       showing version #{@person.version} – #{link_to "current version", @person}
@@ -13,7 +13,7 @@
 
 #tree= render partial: 'tree', locals: { person: @person }
 
-.container
+.container.mt-3
   .row
     .col-8
       %h3 Bio
@@ -21,7 +21,7 @@
 
     .col-4
       %h3 Information
-      %table.table.table-sm{"data-nil" => "<span class='nil'>Click to edit</span>"}
+      %table.table.table-sm
         %tr
           %th Gender:
           %td= @person.gender
