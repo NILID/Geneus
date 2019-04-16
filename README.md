@@ -1,4 +1,4 @@
-![Geneus logo](https://raw.githubusercontent.com//NILID/Geneus/master/geneus-github.png)
+![Geneus logo](https://raw.githubusercontent.com/NILID/Geneus/master/geneus-github.png)
 
 # Geneus
 ------------------
