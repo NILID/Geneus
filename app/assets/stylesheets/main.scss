@@ -8,6 +8,7 @@ option.grey {
 .dim {
   opacity: 0.5;
 }
+
 /* ======= Ajax forms, etc ======= */
 span.best_in_place, .editable {
   display: block;
@@ -145,30 +146,21 @@ div.validation-error li {
   margin: auto;
 }
 #tree .node {
+  display: inline-block;
+  color: #666;
   background-color: #eee;
   width: 90px;
   height: 62px;
   margin: auto;
+
+  &.active,
+  &:hover {
+    -moz-box-shadow: 3px 3px 15px #333;
+    -webkit-box-shadow: 3px 3px 15px #333;
+    box-shadow: 3px 3px 15px #333;
+  }
 }
 
-#tree .node.active, #tree .node:hover {
-  -moz-box-shadow: 3px 3px 15px #333;
-  -webkit-box-shadow: 3px 3px 15px #333;
-  box-shadow: 3px 3px 15px #333;
-}
-
-#tree a.node {
-  display: block;
-  width: 84px;
-  height: 56px;
-  padding: 3px;
-  text-decoration: none;
-  font-size: 10px;
-  overflow: hidden;
-}
-#tree a.node .name {
-  font-weight: bold;
-}
 #tree div.node_separator {
   height: 10px;
 }
