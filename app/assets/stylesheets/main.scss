@@ -64,12 +64,12 @@ div.validation-error li {
   width: 18px;
   height: 17px;
   text-indent: -9999px;
-  background: asset_url(purrClose.png) no-repeat 0 10px;
+  background: asset_url('purrClose.png') no-repeat 0 10px;
 }
 .notice-body {
   min-height: 50px;
   padding: 22px 22px 0 22px;
-  background: asset_url(purrTop.png) no-repeat left top;
+  background: asset_url('purrTop.png') no-repeat left top;
   color: #f9f9f9;
 }
 .notice-body img {
@@ -88,7 +88,7 @@ div.validation-error li {
 }
 .notice-bottom {
   height: 22px;
-  background: asset_url(purrBottom.png) no-repeat left top;
+  background: asset_url('purrBottom.png') no-repeat left top;
 }
 
 .alert-info {
