@@ -5,11 +5,11 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  has_many :partnerships#, -> { proc {
+  has_many :partnerships, :dependent => :destroy#, -> { proc {
 #    'SELECT DISTINCT ps.* '+
  #     'FROM partnerships ps '+
   #    "WHERE ps.person_id = #{self.id} OR ps.partner_id = #{id} "+
-   #   'ORDER BY ps.date_started' } }, :dependent => :destroy
+   #   'ORDER BY ps.date_started' } }
   has_many :partners, through: :partnerships, :source => :partner#, :finder_sql =>
 #    'SELECT DISTINCT p.*, ps.date_started AS partnership_date_started '+
  #     'FROM people p, partnerships ps '+
