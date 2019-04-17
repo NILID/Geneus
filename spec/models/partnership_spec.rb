@@ -6,7 +6,7 @@ RSpec.describe Partnership, type: :model do
 
   it 'must be valid' do
     expect(partnership.valid?).to be true
-    expect(partnership.errors.empty?).to be true
+    expect(partnership.errors).to be_empty
   end
 
   it 'must have person' do
