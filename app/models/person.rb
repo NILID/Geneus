@@ -6,23 +6,22 @@ class Person < ApplicationRecord
   has_paper_trail
 
   has_many :partnerships, :dependent => :destroy#, -> { proc {
-#    'SELECT DISTINCT ps.* '+
- #     'FROM partnerships ps '+
-  #    "WHERE ps.person_id = #{self.id} OR ps.partner_id = #{id} "+
-   #   'ORDER BY ps.date_started' } }
+    #    'SELECT DISTINCT ps.* '+
+    #     'FROM partnerships ps '+
+    #    "WHERE ps.person_id = #{self.id} OR ps.partner_id = #{id} "+
+    #   'ORDER BY ps.date_started' } }
   has_many :partners, through: :partnerships, :source => :partner#, :finder_sql =>
-#    'SELECT DISTINCT p.*, ps.date_started AS partnership_date_started '+
- #     'FROM people p, partnerships ps '+
-  #    "WHERE (ps.partner_id = #{id} AND ps.person_id = p.id) "+
-   #     "OR (ps.person_id = #{id} AND ps.partner_id = p.id) "+
+    #    'SELECT DISTINCT p.*, ps.date_started AS partnership_date_started '+
+    #     'FROM people p, partnerships ps '+
+    #    "WHERE (ps.partner_id = #{id} AND ps.person_id = p.id) "+
+    #     "OR (ps.person_id = #{id} AND ps.partner_id = p.id) "+
     #  'ORDER BY ps.date_started'
   has_many :defacto_partners, through: :partnerships, :source => :partner#, :finder_sql =>
-#    'SELECT DISTINCT person.*, child.date_of_birth AS partnership_date_started '+
- #     'FROM people person, people child '+
-  #    "WHERE (child.father_id = #{id} AND child.mother_id = person.id) "+
-   #     "OR  (child.mother_id = #{id} AND child.father_id = person.id) "+
+    #    'SELECT DISTINCT person.*, child.date_of_birth AS partnership_date_started '+
+    #     'FROM people person, people child '+
+    #    "WHERE (child.father_id = #{id} AND child.mother_id = person.id) "+
+    #     "OR  (child.mother_id = #{id} AND child.father_id = person.id) "+
     #  'ORDER BY child.date_of_birth'
-
 
   has_one :parentship
 
@@ -49,9 +48,8 @@ class Person < ApplicationRecord
 
   # named_scope :parents, { :include => [ :mother, :father ] }
 
-  validates_length_of :name, :minimum => 1
-  validates_inclusion_of :gender, :in => %w( male female ),
-    :message => "must be specified"
+  validates_length_of    :name,   minimum: 1
+  validates_inclusion_of :gender, in: %w( male female ), message: "must be specified"
   validates_date :date_of_birth, {
     :on_or_before => :today,
     :on_or_before_message => "must be before today",
@@ -69,13 +67,6 @@ class Person < ApplicationRecord
     :on_or_after_message => "must be after date of birth",
     :allow_blank => true
   }
-  validate :cannot_be_own_parent
-
-  def cannot_be_own_parent
-    if self == self.mother or self == self.father
-      errors.add(:base, 'Cannot add a person as their own parent or child.')
-    end
-  end
 
   def children_with( person )
     if person == :unknown
