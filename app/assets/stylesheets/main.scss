@@ -9,42 +9,6 @@ option.grey {
   opacity: 0.5;
 }
 
-/* ======= Ajax forms, etc ======= */
-span.best_in_place, .editable {
-  display: block;
-  padding: 0px 4px;
-  border-radius: 2px;
-}
-span.best_in_place {
-  cursor: pointer;
-}
-span.best_in_place:hover, .editable:hover {
-  background-color: #eee;
-}
-span.best_in_place:hover {
-  background-image: asset_url('edit.png');
-  background-repeat: no-repeat;
-  background-position: right top;
-}
-div.validation-error {
-  background-color: #e7e7e7;
-  border-radius: 2px;
-  padding: 7px 10px;
-  margin: 5px 0px;
-  color: #333;
-  display: none;
-}
-div.validation-error ul {
-  margin: 0px;
-  padding: 0px;
-}
-div.validation-error li {
-  list-style-type: square;
-  list-style-position: inside;
-}
-#create_person_dialog {
-  display: none;
-}
 /* ======= jQuery Purr ======= */
 #purr-container {
   position: fixed;

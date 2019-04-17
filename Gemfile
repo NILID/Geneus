@@ -48,7 +48,6 @@ gem 'paper_trail'
 gem 'bootstrap_form'
 gem 'validates_timeliness'
 gem 'haml-rails'
-gem 'best_in_place'
 gem 'rails-jquery-autocomplete'
 
 group :heroku do
