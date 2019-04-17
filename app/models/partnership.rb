@@ -1,16 +1,17 @@
 class Partnership < ApplicationRecord
   belongs_to :person
-  belongs_to :partner, :class_name => 'Person'
+  belongs_to :partner, class_name: 'Person'
 
-  after_create :create_inverse, unless: :inverse_exists?
-  after_destroy :destroy_inverses, if: :inverse_exists?
+  after_create  :create_inverse, unless: :inverse_exists?
+  after_destroy :destroy_inverses,   if: :inverse_exists?
 
-  validates_presence_of :person, :partner
-  validates_uniqueness_of :partner_id, :scope => :person_id, :message => 'already exists.'
+  validates_presence_of :person,
+                        :partner
+  validates_uniqueness_of :partner_id, scope: :person_id, message: 'already exists.'
   validate :cannot_add_self
 
   def cannot_add_self
-    errors.add(:base, 'Cannot add a person as their own partner.') if self.person == self.partner
+    errors.add(:base, 'Cannot add a person as their own partner.') if person == partner
   end
 
   def partner_of_person(someone)
