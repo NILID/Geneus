@@ -1,11 +1,9 @@
 class PeopleController < ApplicationController
-  autocomplete :person, :name, :display_value => :autocomplete_name
   before_action :set_person, only: %i[show edit update destroy versions update_father]
 
   def index
     @people = Person.all
   end
-
 
   def list
     list = Person.tokens(params[:q])

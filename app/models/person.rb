@@ -118,18 +118,6 @@ class Person < ApplicationRecord
     parents
   end
 
-  def autocomplete_name
-    dates_arr = []
-    dates_arr << "b. #{self.date_of_birth.year}" rescue nil
-    dates_arr << "d. #{self.date_of_death.year}" rescue nil
-    if dates_arr.empty?
-      dates = ""
-    else
-      dates = " [#{dates_arr.join(', ')}]"
-    end
-    "#{self.name}#{dates}"
-  end
-
   def ancestry_json
     # add the person
     person = self.attributes.to_hash
