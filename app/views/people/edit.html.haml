@@ -8,10 +8,13 @@
         .row
           .col-6= f.date_field :date_of_birth
           .col-6= f.date_field :date_of_death
+        .row
+          .col-6= f.text_field :location_of_birth
+          .col-6= f.text_field :location_of_death
         = f.fields_for :parentship do |p|
           .row
             .col-6
-              = p.select :father_id, (Person.men - [@person]).map { |f| [f.name, f.id] }, { prompt: '- Select a father -' }
+              = p.select :father_id, (Person.men - [@person]).map { |f| [f.name, f.id] },   { prompt: '- Select a father -' }
             .col-6
               = p.select :mother_id, (Person.women - [@person]).map { |f| [f.name, f.id] }, { prompt: '- Select a mother -' }
         = f.select :partner_ids, Person.all.collect {|c| [c.name, c.id]}, {}, { class: 'select2-token', multiple: true, data: { url: list_people_path(format: :json)} }

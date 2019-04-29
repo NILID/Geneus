@@ -1,15 +1,21 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PeopleHelper. For example:
-#
-# describe PeopleHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe PeopleHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:person) { create(:person) }
+
+  it 'return default EMPTY for nil' do
+    person.bio = nil
+    expect(helper.show_or_empty(person.bio)).to eq(content_tag(:span, 'Empty', class: 'text-muted'))
+  end
+
+  it 'return default avatar for nil with specific gender' do
+    expect(person.gender).to eq('male')
+    expect(avatar_or_default(person)).to eq('missing_male.png')
+  end
+
+  it 'return default avatar for nil with specific gender for female' do
+    person.gender = 'female'
+    expect(avatar_or_default(person)).to eq('missing_female.png')
+  end
+
 end
