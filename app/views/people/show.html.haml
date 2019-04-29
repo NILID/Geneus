@@ -22,7 +22,7 @@
       %p= @person.bio.nil? ? @person.bio : content_tag(:span, 'Empty', class: 'text-muted')
 
     .col-4
-      = image_tag @person.avatar, class: 'img-fluid img-thumbnail mb-2'
+      = image_tag avatar_or_default(@person), class: 'img-fluid img-thumbnail mb-2'
       %h3 Information
       %table.table.table-sm
         %tr

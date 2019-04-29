@@ -16,4 +16,8 @@ module PeopleHelper
     end
     nil
   end
+
+  def avatar_or_default(person)
+    person.avatar.attached? ? person.avatar : "missing_#{person.gender}.png"
+  end
 end
