@@ -4,14 +4,15 @@
       %h2
         Listing People
         %small.text-muted= pluralize @people.size, 'person'
-      - @people.each_with_index do |person, index|
-        .card.mb-3
-          .row.no-gutters
-            .col-md-2.col-6
-              = link_to person do
-                = image_tag avatar_or_default(person), class: 'img-fluid'
-            .col-md-10.col-6
-              .card-body
-                %h5.card-title= link_to person.name, person
-                .card-text
-                  = link_to 'Destroy', person, data: { confirm: 'Are you sure?'}, method: :delete
+  .row
+    .col
+      .card-deck
+        - @people.each_with_index do |person, index|
+          .card
+            = image_tag avatar_or_default(person), class: 'card-img-top'
+            .card-body
+              %h5.card-title= link_to person.name, person
+            .card-footer
+              %small.text-muted
+                = link_to 'Edit', edit_person_path(person)
+                = link_to 'Destroy', person, data: { confirm: 'Are you sure?'}, method: :delete
