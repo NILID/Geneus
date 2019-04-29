@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: %i[show edit update destroy versions update_father]
+  before_action :set_person, only: %i[show edit update destroy versions update_father versions_show]
 
   def index
     @people = Person.all
@@ -16,7 +16,6 @@ class PeopleController < ApplicationController
   end
 
   def versions_show
-    @person = Person.find( params[:id] )
     @person.revert_to( params[:version].to_i )
     puts "\n\n#{params[:version]} :: #{@person.version}\n\n"
   end

@@ -6,9 +6,10 @@ class PartnershipsController < ApplicationController
     respond_to do |format|
       if @partnership.save
         format.html do
-          render :partial => "people/partnership", 
-            :locals => { :partnership => @partnership, :person => @person },
-            :layout => false, :status => :ok
+          render :partial => 'people/partnership',
+                 :locals  => { partnership: @partnership, person: @person },
+                 :layout  => false,
+                 :status  => :ok
         end
       else
         format.json  { render :json => @partnership.errors.to_a, :status => :unprocessable_entity }
