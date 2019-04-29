@@ -29,3 +29,10 @@ Partnership.create([
   { person: august,  partner: joy    },
   { person: carmine, partner: italia }
 ])
+
+# attach avatars
+ italia.avatar.attach( io: File.open(Rails.root.join('db/example_images/italia.png')),  filename: 'italia.png'  )
+carmine.avatar.attach( io: File.open(Rails.root.join('db/example_images/carmine.png')), filename: 'carmine.png' )
+ august.avatar.attach( io: File.open(Rails.root.join('db/example_images/august.png')),  filename: 'august.png'  )
+nicolas.avatar.attach( io: File.open(Rails.root.join('db/example_images/nicolas.png')), filename: 'nicolas.png' )
+  alice.avatar.attach( io: File.open(Rails.root.join('db/example_images/alice.png')),   filename: 'alice.png'   )
