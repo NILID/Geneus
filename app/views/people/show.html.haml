@@ -19,9 +19,10 @@
   .row
     .col-8
       %h3 Bio
-      %p= @person.bio
+      %p= @person.bio.nil? ? @person.bio : content_tag(:span, 'Empty', class: 'text-muted')
 
     .col-4
+      = image_tag @person.avatar, class: 'img-fluid img-thumbnail mb-2'
       %h3 Information
       %table.table.table-sm
         %tr

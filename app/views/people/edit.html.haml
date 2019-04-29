@@ -17,4 +17,5 @@
         = f.select :partner_ids, Person.all.collect {|c| [c.name, c.id]}, {}, { class: 'select2-token', multiple: true, data: { url: list_people_path(format: :json)} }
 
         = f.text_area :bio
+        = f.file_field :avatar
         = f.submit class: 'btn btn-dark'
