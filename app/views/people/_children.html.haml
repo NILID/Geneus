@@ -1,3 +1,6 @@
 #children
-  = div_for person.children_person do |child|
-    = render partial: 'people/person', locals: { person: child }
+  - unless person.children_person
+    = div_for person.children_person do |child|
+      = render partial: 'people/person', locals: { person: child }
+  - else
+    = content_tag(:span, 'No children' , class: 'text-muted')
