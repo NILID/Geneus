@@ -4,14 +4,14 @@
       %h2= @person.name
 
     .col-6.text-right
-      %span.dropdown
-        = link_to '#' ,class: 'btn btn-dark dropdown-toggle', role: 'button', id: 'dropdownMenuLink', data: { toggle: "dropdown"}, aria: { haspopup: "true", expanded: "false" } do
-          Versions
-        .dropdown-menu(aria-labelledby="dropdownMenuButton")
-          = link_to 'Current version', @person, class: 'dropdown-item'
-          = link_to 'View history', versions_person_path(@person), class: 'dropdown-item'
-
-      = link_to 'Edit', edit_person_path(@person), class: 'btn btn-dark'
+      .dropdown
+        %a.btn.btn-dark.dropdown-toggle{ href: '#', role: 'button', data: { toggle: "dropdown"}, aria: { haspopup: "true", expanded: "false" } }
+          = fa_icon 'cog'
+        .dropdown-menu
+          = link_to 'Edit', [:edit, @person],             class: 'dropdown-item'
+          .dropdown-divider
+          = link_to 'Current version', @person,           class: 'dropdown-item'
+          = link_to 'View history', [:versions, @person], class: 'dropdown-item'
 
 #tree= render partial: 'tree', locals: { person: @person }
 
