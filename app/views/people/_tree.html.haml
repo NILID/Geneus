@@ -6,7 +6,7 @@
   - extra_cols = 0
 
 #tree_container{ style: "width: #{ 1000 + (extra_cols * 100)}px;" }
-  %table.tree
+  %table.tree.mx-auto
     %tr.greatgrandparents
       %td= tree_node person.mother.mother.mother rescue tree_node nil
       %td= tree_node person.mother.mother.father rescue tree_node nil
