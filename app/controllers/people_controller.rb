@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_action :set_person, only: %i[show edit update destroy versions update_father versions_show]
 
   def index
-    @people = Person.all
+    @people = Person.all.includes(avatar_attachment: [:blob])
   end
 
   def list
@@ -21,6 +21,7 @@ class PeopleController < ApplicationController
   end
 
   def show
+    @person = @person
     @father = @person.father
     @mother = @person.mother
   end

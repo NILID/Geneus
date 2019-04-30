@@ -75,6 +75,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'rails_real_favicon'
+  gem 'bullet'
 end
 
 group :test do

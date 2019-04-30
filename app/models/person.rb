@@ -76,7 +76,7 @@ class Person < ApplicationRecord
     if person == :unknown
       self.children_person.find_all { |child| !(child.mother && child.father) }
     else
-      children = Parentship.where(father_id: self, mother_id: person).or(Parentship.where(father_id: person, mother_id: self)).map {|p| p.person}
+      children = Parentship.where(father_id: self, mother_id: person).or(Parentship.where(father_id: person, mother_id: self)).includes(:person).map {|p| p.person}
       children.sort_by { |c| c.date_of_birth || Date.new(0) }
     end
   end
@@ -111,7 +111,7 @@ class Person < ApplicationRecord
     # case of the defacto partners is the date their child was born.
 
     #(partners | defacto_partners).includes(:partnerships).order('partnerships.date_started')
-    partners.includes(:partnerships).order('partnerships.date_started')
+    partners.order('partnerships.date_started')
   end
 
   def parents
