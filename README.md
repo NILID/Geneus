@@ -22,6 +22,16 @@ It is conspicuously missing:
 * Editing permissions (open to the world)
 * Relationship validations
 
+## TODO
+* Make current style for none-parent children
+* Add photos with tags
+* Add location coordinates
+* Rebuild history functionality
+* Rebuild parentship functionality
+* Add eager loading
+* More validations
+* More tests
+
 ## Setup
 
     bundle install
