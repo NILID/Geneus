@@ -13,7 +13,7 @@
           = link_to 'Current version', @person,           class: 'dropdown-item'
           = link_to 'View history', [:versions, @person], class: 'dropdown-item'
 
-#tree= render partial: 'tree', locals: { person: @person }
+#tree.pb-3= render partial: 'tree', locals: { person: @person }
 
 .container.mt-3
   .row

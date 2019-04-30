@@ -1,4 +1,7 @@
 #partnerships
-  = div_for(person.partnerships) do |partnership|
-    = render partial: 'people/person', locals: { person: partnership.partner_of_person( person ) }
-    = link_to( 'x', partnership, method: :delete, remote: true, data: { confirm: 'Are you sure?' } )
+  - unless person.partnerships.empty?
+    = div_for(person.partnerships) do |partnership|
+      = render partial: 'people/person', locals: { person: partnership.partner_of_person( person ) }
+      = link_to( 'x', partnership, method: :delete, remote: true, data: { confirm: 'Are you sure?' } )
+  - else
+    = content_tag(:span, 'No partners' , class: 'text-muted')

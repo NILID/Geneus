@@ -18,7 +18,7 @@ class Parentship < ApplicationRecord
 
   def manage_partner
     if father && mother
-      father.partnerships.create! partner: mother
+      father.partnerships.create! partner: mother unless father.partners.include? mother
     end
   end
 end

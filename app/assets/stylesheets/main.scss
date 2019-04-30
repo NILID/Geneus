@@ -33,12 +33,26 @@ option.grey {
   background: asset_url('tree_children_bg.png') top center repeat-y;
   float: left;
   margin-left: 10px;
+  position: relative;
+
+  .btn-partners {
+    position: absolute;
+    left: 90px;
+    top: 0;
+    z-index: 100;
+  }
 }
 #tree table td {
   padding: 10px 0px;
 }
 #tree table td.self {
   background: asset_url('tree_partners_bg.png') top right no-repeat;
+  position: relative;
+  .node {
+    position: absolute;
+    top: 10px;
+    left: 55px;
+  }
 }
 #tree table td.partners {
   background: asset_url('tree_partners_bg.png') top right repeat-x;

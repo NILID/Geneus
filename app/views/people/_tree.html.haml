@@ -32,15 +32,29 @@
         %td
     %tr
       %td(colspan="3")
-      %td{ colspan: '2', class: (person.all_partners.size > 0 ? 'self' : nil) }
+      %td.self{ colspan: '2' }
         = tree_node person, active: true
-        = children_with :unknown
       - if person.all_partners.size > 0
-        %td.partners{ colspan: person.all_partners.size }
-          - person.all_partners.each do |partner|
-            .partner
-              = tree_node partner
-              = children_with partner
+        %td.partners{ colspan: '1' }
+          .partner
+            - if person.all_partners.size > 1
+              %a.btn.btn-light.btn-sm.btn-partners{ href: '#', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' } }
+                = fa_icon 'list'
+              .dropdown-menu
+                .nav#v-pills-tab(role="tablist" aria-orientation="vertical")
+                  - person.all_partners.each_with_index do |person, index|
+                    %a.nav-link{ class: (index == 0 ? 'active' : nil), id: "v-pills-#{person.id}-tab", data: { toggle: "pill" }, href: "#v-pills-#{person.id}", role: "tab", aria: { controls: "v-pills-#{person.id}", selected: "true" } }
+                      = person.name
+            .tab-content
+              - person.all_partners.each_with_index do |person, index|
+                .tab-pane.fade.show{ class: (index == 0 ? 'active' : nil), id: "v-pills-#{person.id}", role: "tabpanel", aria: { labelledby: "v-pills-#{person.id}-tab" } }
+                  = tree_node person
+                  = children_with person
+    %tr
+      %td(colspan='3')
+      %td(colspan='2')
+        = children_with :unknown
+
       - fill_cols.times do
         %td
           &nbsp;

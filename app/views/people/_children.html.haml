@@ -1,5 +1,5 @@
 #children
-  - unless person.children_person
+  - unless person.children_person.empty?
     = div_for person.children_person do |child|
       = render partial: 'people/person', locals: { person: child }
   - else

@@ -73,9 +73,8 @@ class Person < ApplicationRecord
     if person == :unknown
       self.children_person.find_all { |child| !(child.mother && child.father) }
     else
-      (self.children_person & person.children rescue []).sort_by { |c|
-        c.date_of_birth || Date.new(0)
-      }
+      children = Parentship.where(father_id: self, mother_id: person).or(Parentship.where(father_id: person, mother_id: self)).map {|p| p.person}
+      children.sort_by { |c| c.date_of_birth || Date.new(0) }
     end
   end
 
