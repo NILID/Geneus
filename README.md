@@ -4,7 +4,7 @@
 
 Geneus is a Ruby on Rails based genealogy application that operates on the wiki principle: all users edit the same record for an individual.
 
-There is a demo <a href="https://geneus.herokuapp.com/" target="_blank">running on Heroku</a>. Please feel free to explore.
+There is a demo  [running on Heroku](https://geneus.herokuapp.com/). Please feel free to explore.
 
 ## Status
 
