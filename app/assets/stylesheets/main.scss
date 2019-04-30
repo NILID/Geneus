@@ -46,12 +46,15 @@ option.grey {
   padding: 10px 0px;
 }
 #tree table td.self {
-  background: asset_url('tree_partners_bg.png') top right no-repeat;
   position: relative;
+  height: 90px;
   .node {
     position: absolute;
     top: 10px;
     left: 55px;
+  }
+  &.with-partners {
+    background: asset_url('tree_partners_bg.png') top right no-repeat;
   }
 }
 #tree table td.partners {

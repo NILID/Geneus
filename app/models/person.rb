@@ -49,23 +49,26 @@ class Person < ApplicationRecord
 
   # named_scope :parents, { :include => [ :mother, :father ] }
 
-  validates_length_of    :name,   minimum: 1
-  validates_inclusion_of :gender, in: %w( male female ), message: "must be specified"
+  validates_length_of :name,
+    minimum: 1
+  validates_inclusion_of :gender,
+    in: %w( male female ),
+    message: 'must be specified'
   validates_date :date_of_birth, {
     :on_or_before => :today,
-    :on_or_before_message => "must be before today",
+    :on_or_before_message => 'must be before today',
     :allow_blank => true
   }
   validates_date :date_of_birth, {
     :on_or_before => :date_of_death,
-    :on_or_before_message => "must be before date of death",
+    :on_or_before_message => 'must be before date of death',
     :allow_blank => true
   }
   validates_date :date_of_death, {
     :on_or_before => :today,
-    :on_or_before_message => "must be before today",
+    :on_or_before_message => 'must be before today',
     :on_or_after => :date_of_birth,
-    :on_or_after_message => "must be after date of birth",
+    :on_or_after_message => 'must be after date of birth',
     :allow_blank => true
   }
 
