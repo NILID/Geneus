@@ -98,5 +98,3 @@ function initTree(people) {
   st.select(st.root);
   //XXX $jit.EdgeHelper.line.render({ x: 10, y: 30 }, { x: 10, y: 500 }, st.canvas);
 }
-
-

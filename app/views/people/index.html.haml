@@ -6,5 +6,5 @@
         %small.text-muted= pluralize @people.size, 'person'
   .row
     .col
-      .card-deck
+      .card-columns
         = render partial: 'person_card', collection: @people
