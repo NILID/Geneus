@@ -31,6 +31,7 @@ It is conspicuously missing:
 * Add eager loading
 * More validations
 * More tests
+* Allow create person info about birthday/death with year|month|day only
 
 ## Setup
 
