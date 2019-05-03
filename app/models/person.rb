@@ -1,5 +1,5 @@
 class Person < ApplicationRecord
-  include Tokenab
+  include Tokenable
   after_create :create_parentship
 
   has_one_attached :avatar
