@@ -19,20 +19,10 @@ class Person < ApplicationRecord
   has_one :mother, through: :parentship
   has_one :father, through: :parentship
 
-  has_many :children_of_father#, through: :parentship, source: :father, :primary_key => 'father_id'
-  has_many :children_of_mother#, through: :parentship, :foreign_key => 'mother_id'
-  # has_many :children_of_mother, :class_name => 'Parentship', :foreign_key => 'mother_id'
+  has_many :children_of_father, class_name: 'Parentship', :foreign_key => 'father_id'
+  has_many :children_of_mother, class_name: 'Parentship', :foreign_key => 'mother_id'
 
   accepts_nested_attributes_for :parentship
-
-
-  def children
-    Parentship.where(father_id: self).or(Parentship.where(mother_id: self)).includes(:person).sort_by { |c| c.person.date_of_birth || Date.new(0) }
-  end
-
-  def children_person
-    children.map {|c| c.person}
-  end
 
   scope :men,   -> { where(gender: 'male') }
   scope :women, -> { where(gender: 'female') }
@@ -62,17 +52,19 @@ class Person < ApplicationRecord
     :allow_blank => true
   }
 
-  def children_with( person )
-    if person == :unknown
-      self.children_person.find_all { |child| !(child.mother && child.father) }
-    else
-      children = Parentship.where(father_id: self, mother_id: person).or(Parentship.where(father_id: person, mother_id: self)).includes(:person).map {|p| p.person}
-      children.sort_by { |c| c.date_of_birth || Date.new(0) }
-    end
+  def children
+    Person.joins(:parentship).where(parentships: { father: self }).or(
+    Person.joins(:parentship).where(parentships: { mother: self })).order(:date_of_birth)
   end
 
   def children_ids
     self.children.pluck(:id)
+  end
+
+  def children_with(person)
+    person = person == :unknown ? nil : person
+    children.where(parentships: { father: person }).or(
+    children.where(parentships: { mother: person }))
   end
 
   def add_child( child )
