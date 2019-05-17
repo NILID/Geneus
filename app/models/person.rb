@@ -22,6 +22,8 @@ class Person < ApplicationRecord
   has_many :children_of_father, class_name: 'Parentship', :foreign_key => 'father_id'
   has_many :children_of_mother, class_name: 'Parentship', :foreign_key => 'mother_id'
 
+  has_many :notes, :dependent => :destroy
+
   accepts_nested_attributes_for :parentship
 
   scope :men,   -> { where(gender: 'male') }

@@ -10,12 +10,13 @@ Rails.application.routes.draw do
     collection do
       get  :list
     end
-    resources :children, :only => [ :create, :destroy ]
+    resources :children, only: %i[create destroy]
+    resources :notes
   end
-  resources :partnerships, :only => [ :create, :destroy ]
-  resources :parentships,  :only => [ :update, :destroy ]
+  resources :partnerships, only: %i[create destroy]
+  resources :parentships,  only: %i[update destroy]
 
-  root :to => "people#index"
+  root to: 'people#index'
 
   # XXX HACK this shouldn't be necessary:
   # match '/people/:id/update_father', :controller => :people, :action => :update_father

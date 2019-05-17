@@ -85,5 +85,4 @@ class PeopleController < ApplicationController
         partner_ids: []
       )
     end
-
 end
