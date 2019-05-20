@@ -49,7 +49,7 @@ RSpec.describe NotesController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {person_id: person, note: attributes_for(:note)}
+        post :create, params: {person_id: person, note: attributes_for(:note, content: nil)}
         expect(response).to be_successful
       end
     end
@@ -59,8 +59,7 @@ RSpec.describe NotesController, type: :controller do
     context "with valid params" do
       it "updates the requested note" do
         put :update, params: {person_id: person, id: note.to_param, note: attributes_for(:note)}
-        note.reload
-        skip("Add assertions for updated state")
+        expect(response).to redirect_to(assigns(:note).person)
       end
 
       it "redirects to the note" do
@@ -71,7 +70,7 @@ RSpec.describe NotesController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        put :update, params: {person_id: person, id: note.to_param, note: attributes_for(:note)}
+        put :update, params: {person_id: person, id: note.to_param, note: attributes_for(:note, content: nil)}
         expect(response).to be_successful
       end
     end

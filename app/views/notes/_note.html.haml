@@ -1,0 +1,7 @@
+%tr
+  %td
+    = note.content
+  %td.text-right
+    = link_to fa_icon(:edit), edit_person_note_path(@person, note), class: 'btn btn-sm'
+    = link_to fa_icon(:trash), [@person, note], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm'
+

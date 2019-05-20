@@ -59,3 +59,14 @@
         %tr
           %th Children:
           %td= render partial: 'children', locals: { person: @person }
+
+.container.my-3
+  .row
+    .col
+      %h2
+        Notes
+        %small= link_to fa_icon(:plus), [:new, @person, :note], class: 'btn btn-dark btn-sm'
+  .row
+    .col
+      %table.table.table-hover
+        = render @person.notes
