@@ -24,7 +24,7 @@ It is conspicuously missing:
 
 ## TODO
 * Make current style for none-parent children
-* Add photos with tags
+* Add photos with tags and tags of people
 * Add location coordinates
 * Rebuild history functionality
 * Rebuild parentship functionality
