@@ -305,7 +305,7 @@ DEPENDENCIES
   paper_trail
   pg
   puma (~> 3.11)
-  rails (~> 5.2.3)
+  rails (~> 5.2.4, >= 5.2.4.1)
   rails-controller-testing
   rails-jquery-autocomplete
   rails_12factor
