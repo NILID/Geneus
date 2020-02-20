@@ -1,10 +1,3 @@
 = bootstrap_form_for [@person, @note] do |f|
-  - if @note.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@note.errors.count, "error")} prohibited this note from being saved:"
-      %ul
-        - @note.errors.full_messages.each do |message|
-          %li= message
-
   = f.text_area :content
-  = f.submit 'Save'
+  = f.submit class: 'btn btn-dark'
