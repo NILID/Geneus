@@ -16,4 +16,5 @@
 //= require rails-ujs
 //= require activestorage
 //= require select2.full.min
+//= require font_awesome5
 //= require_tree .
