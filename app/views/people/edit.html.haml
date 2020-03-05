@@ -1,7 +1,7 @@
 .container
   .row
     .col
-      %h2 New Person
+      %h2 Editing person #{ link_to @person.name, @person }
       = bootstrap_form_with(model: @person, local: true) do |f|
         = f.text_field :name
         .row
