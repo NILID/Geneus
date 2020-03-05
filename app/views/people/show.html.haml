@@ -1,7 +1,7 @@
 .container
   .row
     .col-6
-      %h2= @person.name
+      %h1.h2= @person.name
 
     .col-6.text-right
       .dropdown
@@ -18,12 +18,21 @@
 .container.mt-3
   .row
     .col-8
-      %h3 Bio
-      %p= show_or_empty(@person.bio)
+      .row
+        .col-12
+          %h2.h3 Bio
+          %p= show_or_empty(@person.bio)
+        .col-12.my-3
+          %h2.h3
+            Notes
+            %small= link_to fa_icon(:plus), [:new, @person, :note], class: 'btn btn-dark btn-sm'
+        .col-12
+          %table.table.table-hover
+            = render @person.notes
 
     .col-4
       = image_tag avatar_or_default(@person), class: 'img-fluid img-thumbnail mb-2'
-      %h3 Information
+      %h2.h3 Information
       %table.table.table-sm
         %tr
           %th Gender:
@@ -60,13 +69,3 @@
           %th Children:
           %td= render partial: 'children', locals: { person: @person }
 
-.container.my-3
-  .row
-    .col
-      %h2
-        Notes
-        %small= link_to fa_icon(:plus), [:new, @person, :note], class: 'btn btn-dark btn-sm'
-  .row
-    .col
-      %table.table.table-hover
-        = render @person.notes
