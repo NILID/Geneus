@@ -5,3 +5,10 @@ cache: bundler
 rvm:
   - 2.6.6
 before_install: gem install bundler
+jobs:
+  include:
+    - stage: deploy to production
+      script: skip
+      deploy:
+        <<: *heroku
+        app: sf-stages-production
