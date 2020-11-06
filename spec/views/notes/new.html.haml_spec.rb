@@ -8,7 +8,7 @@ RSpec.describe "notes/new", type: :view do
 
   it "renders new note form" do
     render
-    assert_select "form[action=?][method=?]", [@person, @note], "post" do
+    assert_select "form[action=?][method=?]", person_note_path(@person, @note), "post" do
       assert_select "textarea[name=?]", "note[content]"
     end
   end

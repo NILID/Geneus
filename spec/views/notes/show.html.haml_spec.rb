@@ -9,6 +9,5 @@ RSpec.describe "notes/show", type: :view do
   it "renders attributes in <p>" do
     render
     expect(rendered).to match(/Note content/)
-    expect(rendered).to match(//)
   end
 end
