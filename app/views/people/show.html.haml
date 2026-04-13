@@ -38,14 +38,14 @@
           %th Gender:
           %td= @person.gender
 
-        - if@person.date_of_birth
+        - if @person.date_of_birth
           %tr
             %th Birth:
             %td
               = @person.date_of_birth
               - if @person.location_of_birth?
                 (#{@person.location_of_birth})
-        - if@person.date_of_death
+        - if @person.date_of_death
           %tr
             %th Death:
             %td
