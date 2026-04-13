@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
     collection do
       get  :list
+      get  :family_chart
+      post :update_tree
     end
     resources :children, only: %i[create destroy]
     resources :notes

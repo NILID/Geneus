@@ -46,4 +46,23 @@ RSpec.describe Person, type: :model do
     expect(person.valid?).to be false
     expect(person.errors[:name]).not_to be_empty
   end
+
+  describe '#family_chart_node' do
+    let!(:father) { create(:person, name: 'Father Doe', gender: 'male') }
+    let!(:mother) { create(:person, name: 'Mother Doe', gender: 'female') }
+    let!(:child) { create(:person, name: 'Child Doe', gender: 'male') }
+
+    before do
+      child.parentship.update!(father: father, mother: mother)
+      father.partnerships.create!(partner: mother)
+    end
+
+    it 'exports id, data and rels in family-chart format' do
+      node = child.family_chart_node
+
+      expect(node[:id]).to eq(child.id.to_s)
+      expect(node[:data]['gender']).to eq('M')
+      expect(node[:rels][:parents]).to contain_exactly(father.id.to_s, mother.id.to_s)
+    end
+  end
 end

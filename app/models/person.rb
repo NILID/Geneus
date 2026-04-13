@@ -33,6 +33,7 @@ class Person < ApplicationRecord
 
   validates_length_of :name,
     minimum: 1
+  validates :chart_id, uniqueness: { allow_blank: true }
   validates_inclusion_of :gender,
     in: %w( male female ),
     message: 'must be specified'
@@ -56,7 +57,7 @@ class Person < ApplicationRecord
 
   def children
     Person.joins(:parentship).where(parentships: { father: self }).or(
-    Person.joins(:parentship).where(parentships: { mother: self })).order(:date_of_birth)
+    Person.joins(:parentship).where(parentships: { mother: self })).distinct.order(:date_of_birth)
   end
 
   def children_ids
@@ -103,6 +104,58 @@ class Person < ApplicationRecord
     parents.push self.mother if self.mother
     parents.push self.father if self.father
     parents
+  end
+
+  def chart_external_id
+    chart_id.presence || id.to_s
+  end
+
+  def family_chart_node
+    {
+      id: chart_external_id,
+      data: family_chart_data,
+      rels: family_chart_relationships
+    }
+  end
+
+  def family_chart_relationships
+    relationships = {}
+
+    parent_ids = parents.map(&:chart_external_id).compact.uniq
+    spouse_ids = partners.distinct.map(&:chart_external_id)
+    child_ids = children.distinct.map(&:chart_external_id)
+
+    relationships[:parents] = parent_ids unless parent_ids.empty?
+    relationships[:spouses] = spouse_ids unless spouse_ids.empty?
+    relationships[:children] = child_ids unless child_ids.empty?
+
+    relationships
+  end
+
+  def family_chart_data
+    {
+      'first name' => first_name,
+      'last name' => last_name,
+      'name' => name,
+      'gender' => family_chart_gender,
+      'birthday' => date_of_birth&.iso8601,
+      'death' => date_of_death&.iso8601
+    }.compact
+  end
+
+  def family_chart_gender
+    gender == 'female' ? 'F' : 'M'
+  end
+
+  def first_name
+    name.to_s.split.first
+  end
+
+  def last_name
+    name_parts = name.to_s.split
+    return nil if name_parts.length <= 1
+
+    name_parts[1..].join(' ')
   end
 
   def ancestry_json
