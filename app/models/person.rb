@@ -8,16 +8,10 @@ class Person < ApplicationRecord
   has_many :partnerships, :dependent => :destroy
   has_many :partners, through: :partnerships, :source => :partner
   has_many :defacto_partners, through: :partnerships, :source => :partner#, :finder_sql =>
-    #    'SELECT DISTINCT person.*, child.date_of_birth AS partnership_date_started '+
-    #     'FROM people person, people child '+
-    #    "WHERE (child.father_id = #{id} AND child.mother_id = person.id) "+
-    #     "OR  (child.mother_id = #{id} AND child.father_id = person.id) "+
-    #  'ORDER BY child.date_of_birth'
-
-  has_one :parentship
-
-  has_one :mother, through: :parentship
-  has_one :father, through: :parentship
+ 
+  has_one :parentship, dependent: :destroy
+  has_one :mother, through: :parentship, source: :father
+  has_one :father, through: :parentship, source: :mother
 
   has_many :children_of_father, class_name: 'Parentship', :foreign_key => 'father_id'
   has_many :children_of_mother, class_name: 'Parentship', :foreign_key => 'mother_id'
@@ -56,54 +50,62 @@ class Person < ApplicationRecord
   }
 
   def children
-    Person.joins(:parentship).where(parentships: { father: self }).or(
-    Person.joins(:parentship).where(parentships: { mother: self })).distinct.order(:date_of_birth)
+    Person
+      .joins(:parentship)
+      .where(parentships: { father_id: id })
+      .or(Person.joins(:parentship).where(parentships: { mother_id: id }))
+      .distinct
+      .order(:date_of_birth)
   end
 
   def children_ids
-    self.children.pluck(:id)
+    children.pluck(:id)
   end
 
-  def children_with(person)
-    person = person == :unknown ? nil : person
-    children.where(parentships: { father: person }).or(
-    children.where(parentships: { mother: person }))
+  def children_with(partner)
+    return [] unless partner
+
+    Person
+      .joins(:parentship)
+      .where(parentships: { father_id: id, mother_id: partner.id })
+      .or(Person.joins(:parentship).where(parentships: { father_id: partner.id, mother_id: id }))
+      .distinct
   end
 
   def add_child( child )
-    if self.gender == 'male'
-      self.children_of_father += [child]
-    elsif self.gender == 'female'
-      self.children_of_mother += [child]
+    raise ArgumentError, "Child must be a Person" unless child.is_a?(Person)
+
+    if gender == 'male'
+      children_as_father.find_or_create_by(child: child)
+    elsif gender == 'female'
+      children_as_mother.find_or_create_by(child: child)
     else
-      errors.add(:base, 'Cannot determine person\'s gender.')
+      errors.add(:base, "Cannot determine person's gender.")
+      false
     end
   end
 
   def remove_child( child )
-    if self.gender == 'male'
-      self.children_of_father -= [child]
-    elsif self.gender == 'female'
-      self.children_of_mother -= [child]
+    raise ArgumentError, "Child must be a Person" unless child.is_a?(Person)
+
+    association = gender == 'male' ? children_as_father : gender == 'female' ? children_as_mother : nil
+
+    if association
+      link = association.find_by(child: child)
+      link&.destroy
     else
-      errors.add(:base, 'Cannot determine person\'s gender.')
+      errors.add(:base, "Cannot determine person's gender.")
+      false
     end
   end
 
   def all_partners
-    # Explicit partners override defacto partners in the union operation.
-    # Then we sort by the date the partnership started, which in the
-    # case of the defacto partners is the date their child was born.
-
-    #(partners | defacto_partners).includes(:partnerships).order('partnerships.date_started')
+    # TODO: добавить defacto-партнёров по необходимости (через детей)
     partners.order('partnerships.date_started')
   end
 
   def parents
-    parents = []
-    parents.push self.mother if self.mother
-    parents.push self.father if self.father
-    parents
+    [mother, father].compact
   end
 
   def chart_external_id
@@ -121,7 +123,7 @@ class Person < ApplicationRecord
   def family_chart_relationships
     relationships = {}
 
-    parent_ids = parents.map(&:chart_external_id).compact.uniq
+    parent_ids = parents.map(&:chart_external_id)
     spouse_ids = partners.distinct.map(&:chart_external_id)
     child_ids = children.distinct.map(&:chart_external_id)
 
@@ -132,6 +134,7 @@ class Person < ApplicationRecord
     relationships
   end
 
+  # === Данные для графа семьи — вынести в отдельный класс в будущем ===
   def family_chart_data
     {
       'first name' => first_name,
@@ -148,49 +151,75 @@ class Person < ApplicationRecord
   end
 
   def first_name
-    name.to_s.split.first
+    name.to_s.strip.split.first
   end
 
   def last_name
-    name_parts = name.to_s.split
-    return nil if name_parts.length <= 1
-
-    name_parts[1..].join(' ')
+    parts = name.to_s.strip.split
+    parts.length > 1 ? parts[1..].join(' ') : nil
   end
 
+  # === Генерация JSON для дерева — ВАЖНО: вынести в отдельный сервис! ===
   def ancestry_json
-    # add the person
-    person = self.attributes.to_hash
-    # add the children
-    person['children'] = []
-    self.children_of_father.each do |child|
-      person['children'].push child.attributes.to_hash.merge({ 'data' => { '$orn' => 'top' } })
+    person_data = attributes.except('created_at', 'updated_at').merge(
+      'children' => [],
+      'data' => { '$orn' => 'center' }
+    )
+
+    # Дети
+    (children_as_father + children_as_mother).uniq.each do |child_ps|
+      child = child_ps.child
+      person_data['children'] << child.attributes.except('created_at', 'updated_at').merge(
+        'data' => { '$orn' => 'top' },
+        'children' => []
+      )
     end
-    self.children_of_mother.each do |child|
-      person['children'].push child.attributes.to_hash.merge({ 'data' => { '$orn' => 'top' } })
+
+    # Партнёры
+    partnerships.includes(partner: [:parentship]).each do |ps|
+      partner = ps.partner
+      next unless partner
+
+      person_data['children'] << partner.attributes.except('created_at', 'updated_at').merge(
+        'data' => { '$orn' => 'left' },
+        'children' => []
+      )
     end
-    # add the partners
-    self.partners.each do |partner|
-      person['children'].push partner.attributes.to_hash.merge({ 'data' => { '$orn' => 'left' } })
-    end
-    # add the ancestors
-    self.parents.each do |parent|
-      # "children" here refers to descendents of the central object in the graph, not the genealogical
-      # relationship. This line adds the current parent.
-      person['children'].push parent.attributes.to_hash.merge({ 'data' => { '$orn' => 'bottom' } })
-      # add the grandparents for this parent
-      grandparents = person['children'].last['children'] = []
+
+    # Родители и предки
+    parents.each do |parent|
+      parent_data = parent.attributes.except('created_at', 'updated_at').merge(
+        'data' => { '$orn' => 'bottom' },
+        'children' => []
+      )
+
+      # Бабушки/дедушки
       parent.parents.each do |grandparent|
-        grandparents.push grandparent.attributes.to_hash.merge({ 'data' => { '$orn' => 'bottom' } })
-        # add the great grandparents for this grandparent
-        great_grandparents = grandparents.last['children'] = []
+        grandparent_data = grandparent.attributes.except('created_at', 'updated_at').merge(
+          'data' => { '$orn' => 'bottom' },
+          'children' => []
+        )
+
+        # Прабабушки/прадедушки
         grandparent.parents.each do |great_grandparent|
-          puts "great grandparent: #{great_grandparent.name}"
-          great_grandparents.push great_grandparent.attributes.to_hash.merge({ 'data' => { '$orn' => 'bottom' } })
+          ggp_data = great_grandparent.attributes.except('created_at', 'updated_at').merge(
+            'data' => { '$orn' => 'bottom' }
+          )
+          grandparent_data['children'] << ggp_data
         end
+
+        parent_data['children'] << grandparent_data
       end
+
+      person_data['children'] << parent_data
     end
-    # return json
-    person.to_json
+
+    person_data.to_json
+  end
+
+  private
+
+  def create_parentship
+    Parentship.find_or_create_by(person: self) if gender.present?
   end
 end
